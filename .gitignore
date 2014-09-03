@@ -1,0 +1,7 @@
+*.log
+.DS_Store
+.tmp
+.grunt
+node_modules
+bower_components
+dist

@@ -1,0 +1,12 @@
+clearfix()
+  &:before, &:after
+    content " "
+    display table
+  &:after
+    clear both
+
+grid($column)
+  width (100 / $grid-columns * $column - $grid-gutter-width * 2)
+
+offset($column)
+  margin-left (100 / $grid-columns * $column - $grid-gutter-width * 2 + $grid-gutter-width * 2)

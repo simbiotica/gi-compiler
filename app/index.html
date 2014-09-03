@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Report - Global Integrity</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="apple-touch-icon" href="images/touch-icon.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="//libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
+    <!-- build:css(.tmp) styles/main.css -->
+      <link rel="stylesheet" href="bower_components/normalize-css/normalize.css">
+      <link rel="stylesheet" href="bower_components/selectize/dist/css/selectize.css">
+      <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+
+    <header class="layout-header">
+      <div class="wrap">
+        <div class="row">
+          <div class="grid-12">
+            <img src="images/ibp-logo.jpg" alt="International budget partnership">
+            <h1>Report</h1>
+            <!-- <button id="printBtn" type="button" class="is-unprintable">Print</button> -->
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="layout-page" id="welcomePage">
+      <div class="wrap">
+        <div class="row">
+          <div class="grid-12">
+            <h1>Welcome</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout-page" id="errorPage">
+      <div class="wrap">
+        <div class="row">
+          <div class="grid-12">
+            <p>The url not exists.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout-page" id="questionPage">
+      <div class="layout-question-toolbar">
+        <div class="wrap">
+          <div class="row">
+            <div class="grid-12">
+              <div class="mod-question-toolbar" id="questionToolbarView"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-question-results">
+        <div class="wrap">
+          <div class="row">
+            <div class="grid-12">
+              <div class="mod-question-results" id="questionResultView"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout-page" id="mapPage">
+      <div class="mod-map" id="mapView"></div>
+    </section>
+
+    <section class="layout-page" id="rankPage">
+      <h1>Rank</h1>
+    </section>
+
+    <div class="mod-spinner" id="spinView"></div>
+
+    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <script src="../bower_components/requirejs/require.js" data-main="scripts/main"></script>
+
+  </body>
+</html>

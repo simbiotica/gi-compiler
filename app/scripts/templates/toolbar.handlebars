@@ -1,0 +1,82 @@
+<p>To customize the report, select the desired targets, then questions you wish to review then click Apply to display. Check Criteria if you wish the answer criteria to be listed for each question.</p>
+
+<div class="row">
+  <div class="grid-4">
+    <label>1.</label>
+    <select name="targets" id="targetSelect" data-placeholder="Select targets" multiple>
+      <option value="all">All targets</option>
+      {{#each targets}}
+        <option value="{{id}}">{{text}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="grid-8">
+    <label>2.</label>
+    <select name="questions" id="questionSelect" placeholder="Select questions" multiple>
+      <option value="all">All questions</option>
+      {{#each questions}}
+        <option value="{{id}}">{{text}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="row">
+    <div class="grid-2 offset-8">
+      <button id="apply" type="button">Apply</button>
+    </div>
+    <div class="grid-2">
+      <label class="checkbox"><input type="checkbox" name="criteria" id="toggleCriteria" checked> Criteria</label>
+    </div>
+  </div>
+</div>
+
+{{!--
+<div class="is-unprintable">
+  <div class="wrap">
+    <div class="row">
+      <div class="grid-12">
+        <p>To customize the report, select the desired targets, then questions you wish to review then click Apply to display. Check Criteria if you wish the answer criteria to be listed for each question.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="grid-4">
+        <label>1.</label>
+        <select name="targets" id="targetSelect" data-placeholder="Select targets" multiple>
+          <option value="all">All targets</option>
+          {{#each targets}}
+            <option value="{{id}}">{{text}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="grid-8">
+        <label>2.</label>
+        <select name="questions" id="questionSelect" placeholder="Select questions" multiple>
+          <option value="all">All questions</option>
+          {{#each questions}}
+            <option value="{{id}}">{{text}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="grid-2 offset-8">
+        <button id="apply" type="button">Apply</button>
+      </div>
+      <div class="grid-2">
+        <label class="checkbox"><input type="checkbox" name="criteria" id="toggleCriteria" checked> Criteria</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="is-printable">
+  <div class="wrap">
+    <div class="row">
+      <div class="grid-12">
+        <h2 class="mod-search-label">Showing:</h2>
+        <div id="currentTarget" class="mod-search-current">All targets</div>
+        <div id="currentQuestion" class="mod-search-current">All questions</div>
+      </div>
+    </div>
+  </div>
+</div>
+ --}}
