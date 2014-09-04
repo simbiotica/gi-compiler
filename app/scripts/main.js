@@ -41,16 +41,22 @@ require.config({
 
 
 require([
+  'underscore',
   'backbone',
   'Router',
   'views/Spin',
   'views/Map',
-  'views/Toolbar'
-], function(Backbone, Router, SpinView, MapView, ToolbarView) {
+  'views/Toolbar',
+  'views/Result'
+], function(_, Backbone, Router, SpinView, MapView, ToolbarView, ResultView) {
+
+  window.Notifications = _.extend(Backbone.Events);
 
   new SpinView();
   new MapView();
   new ToolbarView();
+  new ResultView();
+
   new Router();
 
   Backbone.history.start();

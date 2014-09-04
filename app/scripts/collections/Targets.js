@@ -2,12 +2,12 @@ define([
   'underscore',
   'underscoreString',
   'backbone',
-  'text!queries/questions.pgsql'
+  'text!queries/targets.pgsql'
 ], function(_, underscoreString, Backbone, QUERY) {
 
   'use strict';
 
-  var QuestionsCollection = Backbone.Collection.extend({
+  var TargetsCollection = Backbone.Collection.extend({
 
     url: '//globalintegrity.cartodb.com/api/v1/sql',
 
@@ -42,6 +42,6 @@ define([
 
   });
 
-  return QuestionsCollection;
+  return TargetsCollection;
 
 });

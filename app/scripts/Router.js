@@ -24,6 +24,19 @@ define([
       rank: $('#rankPage')
     },
 
+    initialize: function() {
+      this.setListeners();
+    },
+
+    setListeners: function() {
+      this.on('route', function(routeName, params) {
+        Backbone.Events.trigger('Router:' + routeName, {
+          page: routeName,
+          table: params[0]
+        });
+      });
+    },
+
     welcome: function() {
       this.activePage('welcome');
     },

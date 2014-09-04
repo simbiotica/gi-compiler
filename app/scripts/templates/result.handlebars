@@ -1,4 +1,10 @@
-{{#if categories}}
+{{#each answers}}
+  <article>
+    <h2>{{text}}</h2>
+  </article>
+{{/each}}
+
+{{!-- {{#if categories}}
   {{#each categories}}
     <div class="question-title">
       <div class="wrap">
@@ -77,3 +83,4 @@
     </div>
   </div>
 {{/if}}
+ --}}

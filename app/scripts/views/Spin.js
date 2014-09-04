@@ -34,7 +34,8 @@ define([
     },
 
     setListeners: function() {
-      // subscribe
+      Backbone.Events.on('collection:fetch', this.start, this);
+      Backbone.Events.on('collection:done', this.stop, this);
     },
 
     start: function() {

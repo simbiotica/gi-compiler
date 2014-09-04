@@ -4,15 +4,16 @@ define([
   'underscore',
   'backbone',
   'handlebars',
+  'collections/Targets',
   'collections/Questions',
   'text!templates/toolbar.handlebars'
-], function($, selectize, _, Backbone, Handlebars, QuestionsCollection, tpl) {
+], function($, selectize, _, Backbone, Handlebars, TargetsCollection, QuestionsCollection, tpl) {
 
   'use strict';
 
-  var QuestionToolbarView = Backbone.View.extend({
+  var ToolbarView = Backbone.View.extend({
 
-    el: '#questionToolbarView',
+    el: '#toolbarView',
 
     options: {
       selectize: {
@@ -20,18 +21,28 @@ define([
       }
     },
 
-    template: Handlebars.compile(tpl),
-
-    collection: new QuestionsCollection(),
-
-    initialize: function() {
-      this.showData();
+    events: {
+      'submit form': 'onSubmit'
     },
 
-    setListeners: function() {},
+    template: Handlebars.compile(tpl),
+
+    initialize: function() {
+      this.targetsCollection = new TargetsCollection();
+      this.questionsCollection = new QuestionsCollection();
+
+      this.setListeners();
+    },
+
+    setListeners: function() {
+      Backbone.Events.on('Router:questions', this.showData, this);
+    },
 
     render: function() {
-      this.$el.html(this.template())
+      this.$el.html(this.template({
+          targets: this.targetsCollection.toJSON(),
+          questions: this.questionsCollection.toJSON()
+        }))
         .find('select').selectize(this.options.selectize);
     },
 
@@ -39,28 +50,46 @@ define([
       this.$el.html('');
     },
 
-    showData: function() {
+    onSubmit: function() {
+      var params = this.$el.find('form').serializeArray();
+      var result = _.object(_.pluck(params, 'name'), _.pluck(params, 'value'));
+      Backbone.Events.trigger('Toolbar:submit', result);
+      return false;
+    },
+
+    showData: function(routes) {
       this.empty();
 
       $.when(
-        this.getQuestions()
+        this.getTargets(routes.table),
+        this.getQuestions(routes.table)
       ).then(_.bind(function() {
         this.render();
       }, this));
     },
 
-    getQuestions: function() {
+    getTargets: function(table) {
       var deferred = new $.Deferred();
 
-      this.collection.getAll(function() {
+      this.targetsCollection.getByTable(table, function() {
         deferred.resolve();
       });
 
-      deferred.promise();
+      return deferred.promise();
+    },
+
+    getQuestions: function(table) {
+      var deferred = new $.Deferred();
+
+      this.questionsCollection.getByTable(table, function() {
+        deferred.resolve();
+      });
+
+      return deferred.promise();
     }
 
   });
 
-  return QuestionToolbarView;
+  return ToolbarView;
 
 });
