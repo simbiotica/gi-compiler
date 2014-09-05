@@ -24,7 +24,6 @@ define([
     },
 
     render: function() {
-      console.log(this.answersCollection.toJSON());
       this.$el.html(this.template({
         answers: this.answersCollection.toJSON()
       }));
