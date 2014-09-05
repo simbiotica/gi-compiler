@@ -25,7 +25,7 @@ define([
     },
 
     parse: function(data) {
-      return _.map(_.groupBy(data.rows, 'father'), function(group) {
+      var result = _.map(_.groupBy(data.rows, 'father'), function(group) {
         return {
           id: group[0].father,
           text: group[0].fatherdescription,
@@ -48,12 +48,16 @@ define([
           })
         };
       });
+      return result;
     },
 
-    getByTargetAndQuestion: function(target, question, callback) {
+    getByTargetAndQuestion: function(params, callback) {
       this.fetch({
         data: {
-          q: _.str.sprintf(QUERY, {target: target, question: question})
+          q: _.str.sprintf(QUERY, {
+            table: params.table,
+            targets: params.targets
+          })
         },
         success: callback,
         error: function(response, err) {

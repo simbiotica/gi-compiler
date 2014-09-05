@@ -11,8 +11,8 @@ define([
       '': 'welcome',
       'error': 'error',
       'questions(/:table)': 'questions',
-      'map(/:table)(/:project)(/:question)': 'map',
-      'rank(/:table)(/:project)(/:question)': 'rank',
+      'map(/:table)(/:answer)': 'map',
+      'rank(/:table)(/:answer)': 'rank',
       '*any': 'notFound'
     },
 
@@ -30,10 +30,7 @@ define([
 
     setListeners: function() {
       this.on('route', function(routeName, params) {
-        Backbone.Events.trigger('Router:' + routeName, {
-          page: routeName,
-          table: params[0]
-        });
+        Backbone.Events.trigger('Router:' + routeName, params);
       });
     },
 
@@ -57,16 +54,16 @@ define([
       this.activePage('question');
     },
 
-    map: function(table, project, question) {
-      if (!this.validateTable(table) || !project || !question) {
+    map: function(table, answer) {
+      if (!this.validateTable(table) || !answer) {
         return this.navigate('error', true);
       }
 
       this.activePage('map');
     },
 
-    rank: function(table, project, question) {
-      if (!this.validateTable(table) || !project || !question) {
+    rank: function(table, answer) {
+      if (!this.validateTable(table) || !answer) {
         return this.navigate('error', true);
       }
 
