@@ -90,7 +90,7 @@ module.exports = function(grunt) {
         ],
         'include css': true,
       },
-      server: {
+      compile: {
         files: {
           '<%= root.tmp %>/styles/main.css': '<%= root.app %>/styles/main.styl'
         }
@@ -100,7 +100,11 @@ module.exports = function(grunt) {
     cssmin: {
       dist: {
         files: {
-          '<%= root.dist %>/styles/main.css': '<%= root.tmp %>/styles/main.css'
+          '<%= root.dist %>/styles/main.css': [
+            './bower_components/normalize-css/normalize.css',
+            './bower_components/selectize/dist/css/selectize.css',
+            '<%= root.tmp %>/styles/{,*/}*.css'
+          ]
         }
       }
     },
@@ -130,11 +134,19 @@ module.exports = function(grunt) {
     requirejs: {
       compile: {
         options: {
-          baseUrl: '<%= root.app %>/scripts/',
+          almond: true,
+          wrap: true,
+          useStrict: true,
+          removeCombined: true,
+          baseUrl: './',
           mainConfigFile: '<%= root.app %>/scripts/main.js',
-          include: 'main',
-          name: '../../bower_components/almond/almond',
-          out: '<%= root.dist %>/scripts/main.js'
+          replaceRequireScript: [{
+            files: ['<%= root.dist %>/index.html'],
+            module: 'main'
+          }],
+          modules: [{name: 'main'}],
+          appDir: '<%= root.app %>/scripts/',
+          dir: '<%= root.dist %>/scripts/',
         }
       }
     },
@@ -152,7 +164,13 @@ module.exports = function(grunt) {
 
     useminPrepare: {
       options: {
-        dest: '<%= root.dist %>'
+        dest: '<%= root.dist %>',
+        flow: {
+          html: {
+            steps: { js: [], css: [] },
+            post: {}
+          }
+        }
       },
       html: '<%= root.app %>/index.html'
     },
@@ -161,7 +179,8 @@ module.exports = function(grunt) {
       options: {
         assetsDirs: ['<%= root.dist %>', '<%= root.dist %>/images']
       },
-      html: ['<%= root.dist %>/{,*/}*.html']
+      html: ['<%= root.dist %>/{,*/}*.html'],
+      css: ['<%= root.dist %>/styles/{,*/}*.css']
     },
 
     htmlmin: {
@@ -249,11 +268,12 @@ module.exports = function(grunt) {
     'test',
     'clean:dist',
     'bower',
+    'useminPrepare',
     'copy:dist',
     'stylus',
-    'useminPrepare',
-    'imagemin',
     'cssmin',
+    'imagemin',
+    'requirejs',
     'usemin',
     'htmlmin'
   ]);
