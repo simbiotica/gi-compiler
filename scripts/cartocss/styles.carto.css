@@ -1,0 +1,15 @@
+#export_generic_prod_107_dp {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 1;
+   line-opacity: 1;
+}
+#export_generic_prod_107_dp[answer="Yes, administrative units accounting for all expenditures are presented."] {
+   polygon-fill: #136400;
+}
+#export_generic_prod_107_dp[answer="No, expenditures are not presented by administrative unit."] {
+   polygon-fill: #850200;
+}
+#export_generic_prod_107_dp[answer="Yes, administrative units accounting for at least two-thirds of, but not all, expenditures are presented."] {
+   polygon-fill: #FFA300;
+}
