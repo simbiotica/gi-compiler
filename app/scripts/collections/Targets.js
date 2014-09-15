@@ -31,7 +31,7 @@ define([
     getByTable: function(table, callback) {
       this.fetch({
         data: {
-          q: _.str.sprintf(QUERY, { table: table })
+          q: _.str.sprintf(QUERY, {table: table})
         },
         success: callback,
         error: function(response, err) {

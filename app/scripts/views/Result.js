@@ -24,7 +24,6 @@ define([
     },
 
     render: function() {
-      console.log(this.answersCollection.toJSON());
       this.$el.html(this.template({
         answers: this.answersCollection.toJSON()
       }));
@@ -34,20 +33,24 @@ define([
       this.$el.html('');
     },
 
-    showData: function(params) {
+    showData: function(formdata) {
       this.empty();
 
       $.when(
-        this.getAnswers(params)
+        this.getAnswers(formdata)
       ).then(_.bind(function() {
         this.render();
       }, this));
     },
 
-    getAnswers: function(params) {
+    getAnswers: function(formdata) {
       var deferred = new $.Deferred();
+      var params = {
+        table: formdata.table,
+        targets: '1'
+      };
 
-      this.answersCollection.getByTargetAndQuestion(params.target, params.question, function() {
+      this.answersCollection.getByTargetAndQuestion(params, function() {
         deferred.resolve();
       });
 

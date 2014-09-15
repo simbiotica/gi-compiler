@@ -40,6 +40,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
+          table: this.table,
           targets: this.targetsCollection.toJSON(),
           questions: this.questionsCollection.toJSON()
         }))
@@ -57,12 +58,13 @@ define([
       return false;
     },
 
-    showData: function(routes) {
+    showData: function(params) {
       this.empty();
+      this.table = params[0];
 
       $.when(
-        this.getTargets(routes.table),
-        this.getQuestions(routes.table)
+        this.getTargets(params[0]),
+        this.getQuestions(params[0])
       ).then(_.bind(function() {
         this.render();
       }, this));
