@@ -56,6 +56,21 @@ module.exports = function(grunt) {
       server: '<%= root.tmp %>'
     },
 
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= root.app %>',
+          dest: '<%= root.dist %>',
+          src: [
+            '*.{ico,png,txt}',
+            '{,*/}*.html'
+          ]
+        }]
+      }
+    },
+
     bower: {
       install: {
         options: {
@@ -82,6 +97,14 @@ module.exports = function(grunt) {
       }
     },
 
+    cssmin: {
+      dist: {
+        files: {
+          '<%= root.dist %>/styles/main.css': '<%= root.tmp %>/styles/main.css'
+        }
+      }
+    },
+
     mocha: {
       all: {
         options: {
@@ -102,6 +125,65 @@ module.exports = function(grunt) {
         '<%= root.test %>/specs/{,*/}{,*/}*.js',
         '<%= root.test %>/runner.js'
       ]
+    },
+
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: '<%= root.app %>/scripts/',
+          mainConfigFile: '<%= root.app %>/scripts/main.js',
+          include: 'main',
+          name: '../../bower_components/almond/almond',
+          out: '<%= root.dist %>/scripts/main.js'
+        }
+      }
+    },
+
+    imagemin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= root.app %>/images/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: '<%= root.dist %>/images/'
+        }]
+      }
+    },
+
+    useminPrepare: {
+      options: {
+        dest: '<%= root.dist %>'
+      },
+      html: '<%= root.app %>/index.html'
+    },
+
+    usemin: {
+      options: {
+        assetsDirs: ['<%= root.dist %>', '<%= root.dist %>/images']
+      },
+      html: ['<%= root.dist %>/{,*/}*.html']
+    },
+
+    htmlmin: {
+      dist: {
+        options: {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          removeAttributeQuotes: true,
+          removeCommentsFromCDATA: true,
+          removeEmptyAttributes: true,
+          removeOptionalTags: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= root.dist %>',
+          src: '{,*/}*.html',
+          dest: '<%= root.dist %>'
+        }]
+      }
     },
 
     watch: {
@@ -145,16 +227,13 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('serve', function () {
-
-    grunt.task.run([
-      'clean:server',
-      'bower',
-      'concurrent:server',
-      'connect:livereload',
-      'watch'
-    ]);
-  });
+  grunt.registerTask('serve', [
+    'clean:server',
+    'bower',
+    'concurrent:server',
+    'connect:livereload',
+    'watch'
+  ]);
 
   grunt.registerTask('test', [
     'connect:test',
@@ -164,6 +243,24 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'serve'
+  ]);
+
+  grunt.registerTask('build', [
+    'test',
+    'clean:dist',
+    'bower',
+    'copy:dist',
+    'stylus',
+    'useminPrepare',
+    'imagemin',
+    'cssmin',
+    'usemin',
+    'htmlmin'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'build',
+    'gh-pages'
   ]);
 
 };
