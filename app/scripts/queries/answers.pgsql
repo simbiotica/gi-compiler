@@ -31,8 +31,9 @@ FROM export_generic_prod_%(table)s_meta b GROUP BY father, b.aspectid) fathers
 
 where dnorm.aspectid = criterias.aspectid
 AND dnorm.aspectid=fathers.aspectid
--- AND targetid IN (%(targets)s)
--- AND criterias.aspectid IN ('Q72','Q102', 'C32')
+
+%(targets)s
+%(questions)s
 
 GROUP BY targetid,
 targetname,

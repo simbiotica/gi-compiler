@@ -47,8 +47,9 @@ require([
   'views/Spin',
   'views/Map',
   'views/Toolbar',
-  'views/Result'
-], function(_, Backbone, Router, SpinView, MapView, ToolbarView, ResultView) {
+  'views/Result',
+  'views/Rank'
+], function(_, Backbone, Router, SpinView, MapView, ToolbarView, ResultView, RankView) {
 
   window.Notifications = _.extend(Backbone.Events);
 
@@ -56,6 +57,7 @@ require([
   new MapView();
   new ToolbarView();
   new ResultView();
+  new RankView();
 
   new Router();
 

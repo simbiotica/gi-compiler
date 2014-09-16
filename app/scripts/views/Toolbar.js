@@ -53,8 +53,23 @@ define([
 
     onSubmit: function() {
       var params = this.$el.find('form').serializeArray();
-      var result = _.object(_.pluck(params, 'name'), _.pluck(params, 'value'));
+      // var result = _.object(_.pluck(params, 'name'), _.pluck(params, 'value'));
+      var result = {};
+
+      _.each(params, function(p) {
+        if (!result[p.name]) {
+          result[p.name] = _.pluck(_.where(params, {name: p.name}), 'value');
+        }
+      });
+
+      _.each(result, function(value, key) {
+        if (typeof value === 'object' && value.length === 1) {
+          result[key] = value[0];
+        }
+      });
+
       Backbone.Events.trigger('Toolbar:submit', result);
+
       return false;
     },
 

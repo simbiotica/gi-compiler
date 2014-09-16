@@ -25,7 +25,8 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        answers: this.answersCollection.toJSON()
+        items: this.answersCollection.toJSON(),
+        table: this.currentTable
       }));
     },
 
@@ -47,15 +48,18 @@ define([
       var deferred = new $.Deferred();
       var params = {
         table: formdata.table,
-        targets: '1'
+        targets: formdata.targets,
+        questions: formdata.questions
       };
 
       this.answersCollection.getByTargetAndQuestion(params, function() {
         deferred.resolve();
       });
 
+      this.currentTable = params.table;
+
       return deferred.promise();
-    },
+    }
 
   });
 

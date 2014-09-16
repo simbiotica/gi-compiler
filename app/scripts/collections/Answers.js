@@ -29,12 +29,14 @@ define([
         return {
           id: group[0].father,
           text: group[0].fatherdescription,
-          answer: _.map(group, function(r) {
+          answers: _.map(group, function(r) {
             return {
               id: r.aspectid,
               text: r.aspecttext,
               value: r.answervalue,
               score: r.answerscore,
+              target: r.targetname,
+              targetId: r.targetid,
               criterias: _.compact(_.map(r.criterias, function(c) {
                 var criteria = c.split('|');
                 if (criteria[0] !== '' && criteria[1] !== '') {
@@ -52,12 +54,23 @@ define([
     },
 
     getByTargetAndQuestion: function(params, callback) {
+      var targets = (typeof params.targets === 'object') ? _.map(params.targets, function(t) {
+        return _.str.sprintf('\'%s\'', t);
+      }).toString() : _.str.sprintf('\'%s\'', params.targets);
+      var questions = (typeof params.questions === 'object') ? _.map(params.questions, function(q) {
+        return _.str.sprintf('\'%s\'', q);
+      }).toString() : _.str.sprintf('\'%s\'', params.questions);
+      var query = _.str.sprintf(QUERY, {
+        table: params.table,
+        targets: (params.targets) ?  'AND targetid IN (' + targets + ')' : '',
+        questions: (params.questions) ? 'AND criterias.aspectid IN (' + questions + ')' : ''
+      });
+
+      console.log(query);
+
       this.fetch({
         data: {
-          q: _.str.sprintf(QUERY, {
-            table: params.table,
-            targets: params.targets
-          })
+          q: query
         },
         success: callback,
         error: function(response, err) {
