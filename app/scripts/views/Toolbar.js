@@ -113,6 +113,7 @@ define([
         localStorage.setItem('GICompilerCriteria', $criteria.prop('checked'));
       }
       $criteria.prop('checked', localStorage.getItem('GICompilerCriteria') === 'true');
+      Backbone.Events.trigger('criteria:change');
     }
 
   });

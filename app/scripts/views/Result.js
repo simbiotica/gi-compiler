@@ -21,6 +21,7 @@ define([
 
     setListeners: function() {
       Backbone.Events.on('Toolbar:submit', this.showData, this);
+      Backbone.Events.on('criteria:change', this.toggleCriteria, this);
     },
 
     render: function() {
@@ -28,6 +29,8 @@ define([
         items: this.answersCollection.toJSON(),
         table: this.currentTable
       }));
+
+      this.toggleCriteria();
     },
 
     empty: function() {
@@ -59,6 +62,14 @@ define([
       this.currentTable = params.table;
 
       return deferred.promise();
+    },
+
+    toggleCriteria: function() {
+      if (localStorage.getItem('GICompilerCriteria') === 'true') {
+        $('.mod-results-criterias').removeClass('is-hidden');
+      } else {
+        $('.mod-results-criterias').addClass('is-hidden');
+      }
     }
 
   });
