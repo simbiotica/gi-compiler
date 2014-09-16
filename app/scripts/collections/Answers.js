@@ -66,8 +66,6 @@ define([
         questions: (params.questions) ? 'AND criterias.aspectid IN (' + questions + ')' : ''
       });
 
-      console.log(query);
-
       this.fetch({
         data: {
           q: query
