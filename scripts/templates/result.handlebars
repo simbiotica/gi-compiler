@@ -1,86 +1,43 @@
-{{#each answers}}
-  <article>
-    <h2>{{text}}</h2>
-  </article>
-{{/each}}
-
-{{!-- {{#if categories}}
-  {{#each categories}}
-    <div class="question-title">
+{{#each items}}
+  <section>
+    <header>
       <div class="wrap">
         <div class="row">
           <div class="grid-12">
-            <h2 class="title">{{name}}</h2>
+            <h1>{{text}}</h1>
           </div>
         </div>
       </div>
-    </div>
-
-    {{#each questions}}
+    </header>
+    {{#each answers}}
       <article>
-        {{#if questiontext}}
-          <header>
-            <div class="question-subtitle">
-              <div class="wrap">
-                <div class="row">
-                  <div class="grid-12">
-                    <h3 class="subtitle">{{questiontext}}</h3>
-                  </div>
-                </div>
+        <div class="mod-results-questions">
+          <div class="wrap">
+            <div class="row">
+              <div class="grid-12">
+                <h2>{{text}}</h2>
               </div>
             </div>
-            <div class="question-intro">
-              <div class="wrap">
-                <div class="row">
-                  <div class="grid-12">
-                    <h4 class="target-title">Criteria</h4>
-                    <ul>
-                      {{#each criterias}}
-                        <li><span class="key">{{key}}</span> {{value}}</li>
-                      {{/each}}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </header>
-        {{/if}}
-
-        {{#each answers}}
-          <div class="search-results">
-            <section class="result">
-              <div class="wrap">
-                <div class="row">
-                  <div class="grid-1">
-                    <span class="index">{{answervalue}}</span>
-                  </div>
-
-                  <div class="grid-11">
-                    <h4 class="target-title">{{targetname}}</h4>
-                    {{#if answersourcedescription}}
-                      <p><strong>Source:</strong> {{answersourcedescription}}</p>
-                    {{/if}}
-                    {{#if answercomments}}
-                      <p><strong>Comments:</strong> {{answercomments}}</p>
-                    {{/if}}
-                  </div>
-                </div>
-              </div>
-            </section>
           </div>
-        {{/each}}
-
+        </div>
+        <div class="wrap">
+          <div class="row">
+            <div class="grid-12">
+              <ul class="mod-results-criterias">
+                {{#each criterias}}
+                  <li><span class="key">{{key}}</span> {{value}}</li>
+                {{/each}}
+              </ul>
+              <div class="mod-results-answers">
+                <span class="value">{{value}}</span>
+                <h3>{{target}}</h3>
+                <p><strong>Score</strong>: {{score}}</p>
+                <p><a href="#map/{{../../table}}/{{id}}">Map</a> · <a href="#rank/{{../../table}}/{{id}}">Rank</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
     {{/each}}
-
-  {{/each}}
-{{else}}
-  <div class="question-title">
-    <div class="row">
-      <div class="grid-12">
-        <h2 class="title">No data</h2>
-      </div>
-    </div>
-  </div>
-{{/if}}
- --}}
+  </section>
+{{/each}}

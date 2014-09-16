@@ -1,1 +1,0 @@
-define(["backbone"],function(e){"use strict";var t=e.View.extend({});return t});

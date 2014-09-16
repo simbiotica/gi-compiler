@@ -29,4 +29,6 @@ text!queries/answers.pgsql
 collections/Answers.js
 text!templates/result.handlebars
 views/Result.js
+text!templates/rank.handlebars
+views/Rank.js
 main.js
