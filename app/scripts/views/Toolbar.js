@@ -112,7 +112,7 @@ define([
       if (e) {
         localStorage.setItem('GICompilerCriteria', $criteria.prop('checked'));
       }
-      $criteria.prop('checked', !!(localStorage.getItem('GICompilerCriteria') === 'true'));
+      $criteria.prop('checked', localStorage.getItem('GICompilerCriteria') === 'true');
     }
 
   });
