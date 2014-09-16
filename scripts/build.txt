@@ -6,8 +6,8 @@ cartocss/styles.carto.css
 main.js
 ----------------
 /Users/davidsingal/Projects/gi-compiler/node_modules/grunt-requirejs/node_modules/almond/almond.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/underscore/underscore.js
 /Users/davidsingal/Projects/gi-compiler/bower_components/jquery/dist/jquery.js
+/Users/davidsingal/Projects/gi-compiler/bower_components/underscore/underscore.js
 /Users/davidsingal/Projects/gi-compiler/bower_components/backbone/backbone.js
 Router.js
 /Users/davidsingal/Projects/gi-compiler/bower_components/spinjs/spin.js
