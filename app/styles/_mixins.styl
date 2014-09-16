@@ -6,7 +6,7 @@ clearfix()
     clear both
 
 grid($column)
-  width (100 / $grid-columns * $column - $grid-gutter-width * 2 - $grid-gutter-width * 2)
+  width $column * (100 / $grid-columns)% - $grid-gutter-width * 2
 
 offset($column)
-  margin-left (100 / $grid-columns * $column - $grid-gutter-width * 2 + $grid-gutter-width)
+  margin-left $column * (100 / $grid-columns)% + $grid-gutter-width
