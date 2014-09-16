@@ -26,11 +26,14 @@ a, input, button
 
 
 @media print
+  body
+    font-size $site-font-size - 2
+
   h1
-    font-size $site-font-size + 7
+    font-size $site-font-size + 3
 
   h2
-    font-size $site-font-size + 5
+    font-size $site-font-size
 
   h3
-    font-size $site-font-size + 2
+    font-size $site-font-size - 2
