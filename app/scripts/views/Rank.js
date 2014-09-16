@@ -39,19 +39,18 @@ define([
 
       this.$el.html(this.template({
         question: data[0].answers[0].text,
-        answers: _.uniq(_.sortBy(answers, function(answer) {
+        answers: _.sortBy(answers, function(answer) {
           return Number(answer.score) * -1 + answer.target[0];
-        }), function(answer) {
-          return answer.score + answer.target;
         })
       }));
     },
 
     getAnswers: function(data) {
+      console.log(data);
       var deferred = new $.Deferred();
       var params = {
         table: data[0],
-        targets: 3
+        questions: data[1]
       };
 
       this.answersCollection.getByTargetAndQuestion(params, function() {

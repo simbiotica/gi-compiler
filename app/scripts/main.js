@@ -41,7 +41,7 @@ require.config({
 
 
 require([
-  'underscore',
+  'jquery',
   'backbone',
   'Router',
   'views/Spin',
@@ -49,9 +49,7 @@ require([
   'views/Toolbar',
   'views/Result',
   'views/Rank'
-], function(_, Backbone, Router, SpinView, MapView, ToolbarView, ResultView, RankView) {
-
-  window.Notifications = _.extend(Backbone.Events);
+], function($, Backbone, Router, SpinView, MapView, ToolbarView, ResultView, RankView) {
 
   new SpinView();
   new MapView();
@@ -62,5 +60,10 @@ require([
   new Router();
 
   Backbone.history.start();
+
+  // Print button
+  $('#printBtn').on('click', function() {
+    window.print();
+  });
 
 });

@@ -22,6 +22,7 @@ define([
     },
 
     events: {
+      'change #toggleCriteria': 'setCriteria',
       'submit form': 'onSubmit'
     },
 
@@ -45,6 +46,8 @@ define([
           questions: this.questionsCollection.toJSON()
         }))
         .find('select').selectize(this.options.selectize);
+
+      this.setCriteria();
     },
 
     empty: function() {
@@ -53,7 +56,6 @@ define([
 
     onSubmit: function() {
       var params = this.$el.find('form').serializeArray();
-      // var result = _.object(_.pluck(params, 'name'), _.pluck(params, 'value'));
       var result = {};
 
       _.each(params, function(p) {
@@ -103,6 +105,14 @@ define([
       });
 
       return deferred.promise();
+    },
+
+    setCriteria: function(e) {
+      var $criteria = $('#toggleCriteria');
+      if (e) {
+        localStorage.setItem('GICompilerCriteria', $criteria.prop('checked'));
+      }
+      $criteria.prop('checked', !!(localStorage.getItem('GICompilerCriteria') === 'true'));
     }
 
   });

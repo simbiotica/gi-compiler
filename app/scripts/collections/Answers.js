@@ -57,13 +57,15 @@ define([
       var targets = (typeof params.targets === 'object') ? _.map(params.targets, function(t) {
         return _.str.sprintf('\'%s\'', t);
       }).toString() : _.str.sprintf('\'%s\'', params.targets);
+
       var questions = (typeof params.questions === 'object') ? _.map(params.questions, function(q) {
         return _.str.sprintf('\'%s\'', q);
       }).toString() : _.str.sprintf('\'%s\'', params.questions);
+
       var query = _.str.sprintf(QUERY, {
         table: params.table,
-        targets: (params.targets) ?  'AND targetid IN (' + targets + ')' : '',
-        questions: (params.questions) ? 'AND criterias.aspectid IN (' + questions + ')' : ''
+        targets: (params.targets && params.targets !== 'all') ?  _.str.sprintf('AND targetid IN (%s)', targets) : '',
+        questions: (params.questions && params.questions !== 'all') ? _.str.sprintf('AND criterias.aspectid IN (%s)', questions) : ''
       });
 
       this.fetch({
