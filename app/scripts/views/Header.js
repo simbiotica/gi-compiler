@@ -31,12 +31,14 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        title: this.currentTitle
+        title: this.currentTitle,
+        table: this.currentParams[0],
+        question: this.currentParams[1]
       }));
     },
 
     setTitle: function(params) {
-      this.currentTable = params[0];
+      this.currentParams = params;
 
       $.get(this.getUrl(), _.bind(function(data) {
         this.currentTitle = data.rows[0].title;
@@ -50,7 +52,7 @@ define([
 
     getQuery: function() {
       return _.str.sprintf('SELECT projectname AS title FROM export_generic_prod_%(table)s_dp LIMIT 1', {
-        table: this.currentTable
+        table: this.currentParams[0]
       });
     },
 
