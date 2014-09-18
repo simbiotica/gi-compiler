@@ -3,8 +3,9 @@ define([
   'underscoreString',
   'backbone',
   'text!cartocss/styles.carto.css',
-  'text!queries/map.pgsql'
-], function(_, underscoreString, Backbone, CARTOCSS, QUERY) {
+  'text!queries/map.pgsql',
+  'text!templates/infowindow.handlebars'
+], function(_, underscoreString, Backbone, CARTOCSS, QUERY, INFOWINDOW_TEMPLATE) {
 
   'use strict';
 
@@ -28,26 +29,28 @@ define([
 
     initialize: function() {
       this.$title = $('#mapTitle');
+      this.$legend = $('#mapLegend');
       this.setListeners();
     },
 
     setListeners: function() {
       Backbone.Events.on('Router:map', this.setLayer, this);
-      Backbone.Events.on('Router:map', this.setTitle, this);
     },
 
     createMap: function() {
       this.map = L.map(this.options.mapId, this.options.map);
       L.tileLayer(this.options.tileUrl).addTo(this.map);
-      this.map.invalidateSize();
     },
 
-    setTitle: function(params) {
-      this.currentParams = params;
+    setTitle: function() {
+      var deferred = new $.Deferred();
 
       $.get(this.getUrl(), _.bind(function(data) {
         this.$title.text(data.rows[0].title);
+        deferred.resolve();
       }, this));
+
+      return deferred.promise();
     },
 
     getUrl: function() {
@@ -71,28 +74,66 @@ define([
         table: params.table
       });
 
-      if (!this.map) {
-        this.createMap();
-      }
+      this.currentParams = params;
 
-      if (this.layer) {
-        this.layer.setSQL(query);
-        this.layer.setCartoCSS(styles);
-      } else {
-        this.options.cartodb.sublayers = [{
-          sql: query,
-          cartocss: styles
-        }];
+      $.when(this.setTitle()).then(_.bind(function() {
 
-        cartodb.createLayer(this.map, this.options.cartodb)
-          .addTo(this.map)
-          .on('done', _.bind(function(layer) {
-            this.layer = layer.getSubLayer(0);
-          }, this))
-          .on('error', function(err) {
-            throw 'some error occurred: ' + err;
-          });
-      }
+        if (!this.map) {
+          this.createMap();
+        }
+
+        if (this.layer) {
+          this.layer.setSQL(query);
+          this.layer.setCartoCSS(styles);
+        } else {
+          this.options.cartodb.sublayers = [{
+            sql: query,
+            cartocss: styles,
+            interactivity: 'name, answerscore, project, value'
+          }];
+
+          cartodb.createLayer(this.map, this.options.cartodb)
+            .addTo(this.map)
+            .on('done', _.bind(function(layer) {
+              this.layer = layer.getSubLayer(0);
+              this.setInfowindow();
+              this.setLegend();
+            }, this))
+            .on('error', function(err) {
+              throw 'some error occurred: ' + err;
+            });
+        }
+
+      }, this));
+
+    },
+
+    setInfowindow: function() {
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.layer, this.options.cartodb.sublayers[0].interactivity, {
+        infowindowTemplate: INFOWINDOW_TEMPLATE
+      });
+    },
+
+    setLegend: function() {
+      var legend = new cdb.geo.ui.Legend({
+        type: 'custom',
+        data: [{
+          name: 'Yes, administrative units accounting for all expenditures are presented.',
+          value: '#136400'
+        }, {
+          name: 'No, expenditures are not presented by administrative unit.',
+          value: '#850200'
+        }, {
+          name: 'Yes, administrative units accounting for at least two-thirds of, but not all, expenditures are presented.',
+          value: '#FFA300'
+        }]
+      });
+
+      // var stackedLegend = new cdb.geo.ui.Legend.Stacked({
+      //   legends: [simpleLegend]
+      // });
+
+      this.$legend.html(legend.render().$el);
     }
 
   });
