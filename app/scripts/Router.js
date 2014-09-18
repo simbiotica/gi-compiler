@@ -37,6 +37,10 @@ define([
           Backbone.Events.trigger('Router:' + routeName, params);
         }
       });
+
+      Backbone.Events.on('data:error', function() {
+        this.activePage('error');
+      }, this);
     },
 
     welcome: function() {

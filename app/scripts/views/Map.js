@@ -129,10 +129,6 @@ define([
         }]
       });
 
-      // var stackedLegend = new cdb.geo.ui.Legend.Stacked({
-      //   legends: [simpleLegend]
-      // });
-
       this.$legend.html(legend.render().$el);
     }
 

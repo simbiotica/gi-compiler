@@ -84,6 +84,8 @@ define([
         },
         success: callback,
         error: function(response, err) {
+          Backbone.Events.trigger('collection:done');
+          Backbone.Events.trigger('data:error', 'No data available.');
           throw err.responseText;
         }
       });
