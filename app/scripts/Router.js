@@ -30,7 +30,11 @@ define([
 
     setListeners: function() {
       this.on('route', function(routeName, params) {
-        Backbone.Events.trigger('Router:' + routeName, params);
+        if (routeName === 'questions' && this.validateTable(params[0])) {
+          Backbone.Events.trigger('Router:' + routeName, params);
+        } else if (this.validateTable(params[0]) || params[1]) {
+          Backbone.Events.trigger('Router:' + routeName, params);
+        }
       });
     },
 
