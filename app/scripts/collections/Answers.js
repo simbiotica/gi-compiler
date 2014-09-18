@@ -26,30 +26,40 @@ define([
 
     parse: function(data) {
       var result = _.map(_.groupBy(data.rows, 'father'), function(group) {
+
+        var questions = _.groupBy(_.map(group, function(r) {
+          return {
+            id: r.aspectid,
+            text: r.aspecttext,
+            value: r.answervalue,
+            score: r.answerscore,
+            target: r.targetname,
+            targetId: r.targetid,
+            criterias: _.compact(_.map(r.criterias, function(c) {
+              var criteria = c.split('|');
+              if (criteria[0] !== '' && criteria[1] !== '') {
+                return {
+                  key: criteria[0],
+                  value: criteria[1]
+                };
+              }
+            }))
+          };
+        }), 'id');
+
         return {
           id: group[0].father,
           text: group[0].fatherdescription,
-          answers: _.map(group, function(r) {
+          questions: _.map(questions, function(q) {
             return {
-              id: r.aspectid,
-              text: r.aspecttext,
-              value: r.answervalue,
-              score: r.answerscore,
-              target: r.targetname,
-              targetId: r.targetid,
-              criterias: _.compact(_.map(r.criterias, function(c) {
-                var criteria = c.split('|');
-                if (criteria[0] !== '' && criteria[1] !== '') {
-                  return {
-                    key: criteria[0],
-                    value: criteria[1]
-                  };
-                }
-              }))
+              id: q[0].id,
+              text: q[0].text,
+              answers: q
             };
           })
         };
       });
+
       return result;
     },
 
