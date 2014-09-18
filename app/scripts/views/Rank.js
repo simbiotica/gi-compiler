@@ -35,10 +35,10 @@ define([
 
     render: function() {
       var data = this.answersCollection.toJSON();
-      var answers = _.pluck(data, 'answers')[0];
+      var answers = data[0].questions[0].answers;
 
       this.$el.html(this.template({
-        question: data[0].answers[0].text,
+        question: data[0].questions[0].answers[0].text,
         answers: _.sortBy(answers, function(answer) {
           return Number(answer.score) * -1 + answer.target[0];
         })
