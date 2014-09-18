@@ -52,44 +52,24 @@ define([
         this.createMap();
       }
 
-      // if (this.layer) {
-      //   console.log(this.layer);
-      //   this.layer.setSQL(query);
-      //   this.layer.setCartoCSS(styles);
-      // } else {
-      //   this.options.cartodb.sublayers = [{
-      //     sql: query,
-      //     cartocss: styles
-      //   }];
-
-      //   console.log(this.map);
-
-      //   cartodb.createLayer(this.map, this.options.cartodb)
-      //     .addTo(this.map)
-      //     .on('done', _.bind(function(layer) {
-      //       this.layer = layer.getSubLayer(0);
-      //     }, this))
-      //     .on('error', function(err) {
-      //       throw 'some error occurred: ' + err;
-      //     });
-      // }
-
-      var query = 'SELECT * FROM idea_countries';
-
-      var layerOptions = {
-        user_name: 'simbiotica',
-        type: 'cartodb',
-        sublayers: [{
+      if (this.layer) {
+        this.layer.setSQL(query);
+        this.layer.setCartoCSS(styles);
+      } else {
+        this.options.cartodb.sublayers = [{
           sql: query,
-          cartocss: '#countries_to_draw{polygon-fill: #015A74; polygon-opacity: 0.7; line-color: #015A74; line-width: 1; line-opacity: 1;}'
-        }]
-      };
+          cartocss: styles
+        }];
 
-      cartodb.createLayer(this.map, layerOptions)
-        .on('done', function(layer) {
-          console.log('====== DONE ????????');
-        })
-        .addTo(this.map);
+        cartodb.createLayer(this.map, this.options.cartodb)
+          .addTo(this.map)
+          .on('done', _.bind(function(layer) {
+            this.layer = layer.getSubLayer(0);
+          }, this))
+          .on('error', function(err) {
+            throw 'some error occurred: ' + err;
+          });
+      }
     }
 
   });
