@@ -21,7 +21,8 @@ define([
       error: $('#errorPage'),
       question: $('#questionPage'),
       map: $('#mapPage'),
-      rank: $('#rankPage')
+      rank: $('#rankPage'),
+      notFound: $('#notFoundPage')
     },
 
     initialize: function() {
@@ -47,12 +48,12 @@ define([
     },
 
     notFound: function() {
-      this.navigate('error', true);
+      this.activePage('notFound');
     },
 
     questions: function(table) {
       if (!this.validateTable(table)) {
-        return this.navigate('error', true);
+        return this.activePage('error');
       }
 
       this.activePage('question');
@@ -60,7 +61,7 @@ define([
 
     map: function(table, answer) {
       if (!this.validateTable(table) || !answer) {
-        return this.navigate('error', true);
+        return this.activePage('error');
       }
 
       this.activePage('map');
@@ -68,7 +69,7 @@ define([
 
     rank: function(table, answer) {
       if (!this.validateTable(table) || !answer) {
-        return this.navigate('error', true);
+        return this.activePage('error');
       }
 
       this.activePage('rank');
