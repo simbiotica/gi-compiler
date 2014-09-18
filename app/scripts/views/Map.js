@@ -11,6 +11,7 @@ define([
   var MapView = Backbone.View.extend({
 
     options: {
+      mapId: 'map',
       map: {
         zoom: 3,
         center: [0, 0]
@@ -26,16 +27,38 @@ define([
     el: '#mapView',
 
     initialize: function() {
+      this.$title = $('#mapTitle');
       this.setListeners();
     },
 
     setListeners: function() {
       Backbone.Events.on('Router:map', this.setLayer, this);
+      Backbone.Events.on('Router:map', this.setTitle, this);
     },
 
     createMap: function() {
-      this.map = L.map(this.el, this.options.map);
+      this.map = L.map(this.options.mapId, this.options.map);
       L.tileLayer(this.options.tileUrl).addTo(this.map);
+      this.map.invalidateSize();
+    },
+
+    setTitle: function(params) {
+      this.currentParams = params;
+
+      $.get(this.getUrl(), _.bind(function(data) {
+        this.$title.text(data.rows[0].title);
+      }, this));
+    },
+
+    getUrl: function() {
+      return '//globalintegrity.cartodb.com/api/v1/sql?q=' + this.getQuery();
+    },
+
+    getQuery: function() {
+      return _.str.sprintf('SELECT aspecttext AS title FROM export_generic_prod_%(table)s_dp WHERE export_generic_prod_%(table)s_dp.aspectid=\'%(question)s\' LIMIT 1', {
+        table: this.currentParams[0],
+        question: this.currentParams[1]
+      });
     },
 
     setLayer: function(params) {
