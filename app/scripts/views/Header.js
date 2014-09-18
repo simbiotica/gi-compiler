@@ -4,12 +4,20 @@ define([
   'jquery',
   'underscore',
   'underscoreString',
-  'backbone'
-], function($, _, underscoreString, Backbone) {
+  'backbone',
+  'handlebars',
+  'text!templates/header.handlebars'
+], function($, _, underscoreString, Backbone, Handlebars, tpl) {
 
-  var TitleView = Backbone.View.extend({
+  var HeaderView = Backbone.View.extend({
 
-    el: '#titleView',
+    el: '#headerView',
+
+    events: {
+      'click #printBtn': 'print'
+    },
+
+    template: Handlebars.compile(tpl),
 
     initialize: function() {
       this.setListeners();
@@ -22,7 +30,9 @@ define([
     },
 
     render: function() {
-      this.$el.text(this.currentTitle);
+      this.$el.html(this.template({
+        title: this.currentTitle
+      }));
     },
 
     setTitle: function(params) {
@@ -42,10 +52,14 @@ define([
       return _.str.sprintf('SELECT projectname AS title FROM export_generic_prod_%(table)s_dp LIMIT 1', {
         table: this.currentTable
       });
+    },
+
+    print: function() {
+      window.print();
     }
 
   });
 
-  return TitleView;
+  return HeaderView;
 
 });

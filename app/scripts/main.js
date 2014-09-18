@@ -45,15 +45,15 @@ require([
   'backbone',
   'Router',
   'views/Spin',
-  'views/Title',
+  'views/Header',
   'views/Map',
   'views/Toolbar',
   'views/Result',
   'views/Rank'
-], function($, Backbone, Router, SpinView, TitleView, MapView, ToolbarView, ResultView, RankView) {
+], function($, Backbone, Router, SpinView, HeaderView, MapView, ToolbarView, ResultView, RankView) {
 
   new SpinView();
-  new TitleView();
+  new HeaderView();
   new MapView();
   new ToolbarView();
   new ResultView();
@@ -62,10 +62,5 @@ require([
   new Router();
 
   Backbone.history.start();
-
-  // Print button
-  $('#printBtn').on('click', function() {
-    window.print();
-  });
 
 });
