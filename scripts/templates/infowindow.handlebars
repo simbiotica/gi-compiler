@@ -1,0 +1,17 @@
+<div class="cartodb-popup">
+  <a href="#close" class="cartodb-popup-close-button close">x</a>
+   <div class="cartodb-popup-content-wrapper">
+     <div class="cartodb-popup-content">
+       {{!-- content.data contains the field info --}}
+       <h4>Project: </h4>
+       <p>{{content.data.project}}</p>
+       <h4>Target: </h4>
+       <p>{{content.data.name}}</p>
+       <h4>Score: </h4>
+       <p>{{content.data.answerscore}}</p>
+       <h4>Value: </h4>
+       <p>{{content.data.value}}</p>
+     </div>
+   </div>
+   <div class="cartodb-popup-tip-container"></div>
+</div>

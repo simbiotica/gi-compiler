@@ -9,13 +9,17 @@
         </div>
       </div>
     </header>
-    {{#each answers}}
+    {{#each questions}}
       <article>
         <div class="mod-results-questions">
           <div class="wrap">
             <div class="row">
               <div class="grid-12">
                 <h2>{{text}}</h2>
+                <div class="mod-results-buttons">
+                  <a href="#map/{{../../table}}/{{id}}">Map</a>
+                  <a href="#rank/{{../../table}}/{{id}}">Rank</a>
+                </div>
               </div>
             </div>
           </div>
@@ -23,17 +27,20 @@
         <div class="wrap">
           <div class="row">
             <div class="grid-12">
-              <ul class="mod-results-criterias is-hidden">
-                {{#each criterias}}
-                  <li><span class="key">{{key}}</span> {{value}}</li>
-                {{/each}}
-              </ul>
-              <div class="mod-results-answers">
-                <span class="value">{{value}}</span>
-                <h3>{{target}}</h3>
-                <p><strong>Score</strong>: {{score}}</p>
-                <p><a href="#map/{{../../table}}/{{id}}">Map</a> · <a href="#rank/{{../../table}}/{{id}}">Rank</a></p>
-              </div>
+
+              {{#each answers}}
+                <ul class="mod-results-criterias is-hidden">
+                  {{#each criterias}}
+                    <li><span class="key">{{key}}</span> {{value}}</li>
+                  {{/each}}
+                </ul>
+                <div class="mod-results-answers" data-id="{{id}}">
+                  <span class="value">{{value}}</span>
+                  <h3>{{target}}</h3>
+                  <p><strong>Score</strong>: {{score}}</p>
+                </div>
+              {{/each}}
+
             </div>
           </div>
         </div>
