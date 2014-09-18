@@ -246,7 +246,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('serve', [
+  grunt.registerTask('server', [
     'clean:server',
     'bower',
     'concurrent:server',

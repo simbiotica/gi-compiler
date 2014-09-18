@@ -18,7 +18,7 @@ Install globally dependencies:
 
 For development
     
-    grunt
+    grunt server
 
 For production
     

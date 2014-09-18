@@ -46,7 +46,6 @@ define([
     },
 
     getAnswers: function(data) {
-      console.log(data);
       var deferred = new $.Deferred();
       var params = {
         table: data[0],
