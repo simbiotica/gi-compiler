@@ -17,6 +17,7 @@ define([
         zoom: 3,
         center: [0, 0]
       },
+      colorsPath: ['#136400', '#FFA300', '#850200', '#FF0000', '#00FF00'],
       tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-dark/{z}/{x}/{y}.png',
       cartodb: {
         user_name: 'globalintegrity',
@@ -70,13 +71,17 @@ define([
         answer: params[1]
       });
 
-      var styles = _.str.sprintf(CARTOCSS, {
-        table: params.table
-      });
-
       this.currentParams = params;
 
-      $.when(this.setTitle()).then(_.bind(function() {
+      //console.log(this.getCartoCSS());
+
+      $.when(
+        this.setTitle(),
+        this.getCartoCSS()
+      )
+      .then(_.bind(function(title, styles) {
+
+        console.log(styles);
 
         if (!this.map) {
           this.createMap();
@@ -115,22 +120,69 @@ define([
     },
 
     setLegend: function() {
-      var legend = new cdb.geo.ui.Legend({
-        type: 'custom',
-        data: [{
-          name: 'Yes, administrative units accounting for all expenditures are presented.',
-          value: '#136400'
-        }, {
-          name: 'No, expenditures are not presented by administrative unit.',
-          value: '#850200'
-        }, {
-          name: 'Yes, administrative units accounting for at least two-thirds of, but not all, expenditures are presented.',
-          value: '#FFA300'
-        }]
-      });
+      var dataArr = [],
+          legend;
 
-      this.$legend.html(legend.render().$el);
+      $.get(this.getLegendUrl(), _.bind(function(data) {
+
+        dataArr = _.map(data.rows, function(d, i) {
+          return {
+            name: d.choice +','+ d.criteria,
+            value: this.options.colorsPath[i]
+          };
+        }, this);
+
+        legend = new cdb.geo.ui.Legend({
+          type: 'custom',
+          data: dataArr
+        });
+
+        this.$legend.html(legend.render().$el);
+      }, this));
+    },
+
+    getCartoCSS: function() {
+      var deferred = new $.Deferred();
+      var colorsArr = [];
+
+      $.get(this.getLegendUrl(), _.bind(function(data) {
+
+        colorsArr = _.map(data.rows, function(d, i) {
+          return '#export_generic_prod_107_dp[answer=\'' + d.criteria + '\'] {polygon-fill: '+this.options.colorsPath[i]+';}';
+        }, this);
+
+        return deferred.resolve(_.str.sprintf(CARTOCSS, {
+          table: this.currentParams[0],
+          colors: colorsArr.join(' ')
+        }));
+
+      }, this));
+
+      // return _.str.sprintf(CARTOCSS, {
+      //   table: this.currentParams[0],
+      //   colors: colorsArr.join('')
+      // });
+
+      return deferred.promise();
+
+
+      // return _.str.sprintf(CARTOCSS, {
+      //   table: this.currentParams[0],
+      //   colors: '#export_generic_prod_107_dp[answer="Yes, administrative units accounting for all expenditures are presented."] {polygon-fill: #136400;}'
+      // });
+    },
+
+    getLegendUrl: function() {
+      return '//globalintegrity.cartodb.com/api/v1/sql?q=' + this.getLegendQuery();
+    },
+
+    getLegendQuery: function() {
+      return _.str.sprintf('SELECT choice, score, criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
+        table: this.currentParams[0],
+        question: this.currentParams[1]
+      });
     }
+
 
   });
 
