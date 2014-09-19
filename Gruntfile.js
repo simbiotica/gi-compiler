@@ -281,7 +281,7 @@ module.exports = function(grunt) {
     'useminPrepare',
     'copy:dist',
     'stylus',
-    'requirejs'
+    'requirejs',
     'cssmin',
     'imagemin',
     'svgmin',
