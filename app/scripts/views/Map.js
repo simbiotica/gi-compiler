@@ -83,9 +83,12 @@ define([
           this.createMap();
         }
 
+        this.removeLegend();
+
         if (this.layer) {
           this.layer.setSQL(query);
           this.layer.setCartoCSS(styles);
+          this.setLegend();
         } else {
           this.options.cartodb.sublayers = [{
             sql: query,
@@ -170,6 +173,10 @@ define([
         table: this.currentParams[0],
         question: this.currentParams[1]
       });
+    },
+
+    removeLegend: function() {
+      this.$legend.html('');
     }
 
 
