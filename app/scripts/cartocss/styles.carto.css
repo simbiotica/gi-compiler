@@ -1,0 +1,8 @@
+#export_generic_prod_%(table)s_dp {
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 1;
+  line-opacity: 1;
+}
+
+%(colors)s

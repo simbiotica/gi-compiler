@@ -1,0 +1,36 @@
+.wrap
+  display block
+  margin 0 auto
+  max-width $grid-max-width
+  min-width $grid-min-width
+
+.row
+  clearfix()
+  .row
+    margin 0 ($grid-gutter-width * -1)
+
+$grid
+  display block
+  float left
+  margin 0 $grid-gutter-width
+  position relative
+
+for $column in (1)..($grid-columns)
+  .grid-{$column}, .grid-sm-{$column}, .grid-md-{$column}, .grid-lg-{$column}
+    @extend $grid
+    grid($column)
+  .offset-{$column}
+    offset($column)
+
+@media screen and (min-width $lg)
+  for $column in (1)..($grid-columns)
+    .grid-lg-{$column}
+      grid($column)
+@media screen and (max-width $md)
+  for $column in (1)..($grid-columns)
+    .grid-md-{$column}
+      grid($column)
+@media screen and (max-width $sm)
+  for $column in (1)..($grid-columns)
+    .grid-sm-{$column}
+      grid($column)

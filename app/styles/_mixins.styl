@@ -1,0 +1,21 @@
+clearfix()
+  &:before, &:after
+    content " "
+    display table
+  &:after
+    clear both
+
+grid($column)
+  width $column * (100 / $grid-columns)% - $grid-gutter-width * 2
+
+offset($column)
+  margin-left $column * (100 / $grid-columns)% + $grid-gutter-width
+
+form-field-reset()
+  -webkit-appearance none
+  appearance none
+  box-shadow none
+  background none
+  border 0
+  &:focus
+    outline none

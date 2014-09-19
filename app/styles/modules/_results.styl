@@ -1,0 +1,92 @@
+.mod-results
+  header
+    padding 10px 0
+    background-color $color-1
+
+  h1
+    color $color-5
+    font-weight bold
+
+.mod-results-questions
+  background-color $color-3
+  padding 10px 0
+
+  background-image: linear-gradient(to right, #656565 20%, rgba(255,255,255,0) 0%), linear-gradient(to right, #656565 20%, rgba(255,255,255,0) 0%);
+  background-position: bottom, top;
+  background-size: 10px 2px;
+  background-repeat: repeat-x;
+
+  article:first-of-type &
+    background-position: bottom;
+
+.mod-results-answers
+  margin 30px 0
+  padding-left 70px
+
+  h3
+    padding-top 10px
+
+  .value
+    position absolute
+    display block
+    width 40px
+    left 0
+
+    background-color $color-1
+    border-radius 100%
+    color $color-5
+    font-size $site-font-size + 8
+    font-weight bold
+    line-height 40px
+    text-align center
+    text-transform uppercase
+
+.mod-results-criterias
+  margin 30px 0
+  padding 0
+  list-style none
+
+  li
+    margin 1em 0
+    font-size 14px
+
+  .key
+    font-weight bold
+    color $color-1
+    text-transform uppercase
+
+.mod-results-buttons
+  margin-bottom 20px
+  a
+    font-size 14px
+    color $color-2
+    text-decoration none
+    position relative
+    padding-left 30px
+
+    &:hover
+      text-decoration underline
+
+    &:first-child:before
+      content ''
+      display block
+      position absolute
+      top -3px
+      left 0
+      width 25px
+      height 25px
+      background url('../images/map-icon.png') no-repeat center
+
+    &:last-child
+      margin-left 40px
+
+      &:before
+        content ''
+        display block
+        position absolute
+        top -3px
+        left 0
+        width 25px
+        height 25px
+        background url('../images/rank-icon.png') no-repeat center
+

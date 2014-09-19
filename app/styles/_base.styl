@@ -1,0 +1,43 @@
+body
+  font-family $site-font-family
+  font-size $site-font-size
+  line-height $site-line-height
+  text-rendering optimizeLegibility
+  -webkit-font-smoothing antialiased
+
+h1, h2, h3
+  margin .67em 0
+
+h1, h2
+  font-weight normal
+
+h1
+  font-size $site-font-size + 20
+
+  .mod-map &
+  .mod-rank &
+    font-size $site-font-size + 5
+
+h2
+  font-size $site-font-size + 5
+
+h3
+  font-size $site-font-size + 5
+
+a, input, button
+  &:focus
+    outline 0
+
+
+@media print
+  body
+    font-size $site-font-size - 2
+
+  h1
+    font-size $site-font-size + 3
+
+  h2
+    font-size $site-font-size
+
+  h3
+    font-size $site-font-size - 2

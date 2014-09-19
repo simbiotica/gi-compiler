@@ -1,0 +1,76 @@
+.mod-toolbar
+  padding 20px 0
+
+  .form-row
+    margin 20px 0
+
+  label, .selectize-control
+    display inline-block
+    vertical-align middle
+
+  label
+    width 20px
+
+  .selectize-control
+    width calc(100% - 24px)
+
+  .checkbox
+    display inline-flex
+    padding 0 20px
+    width auto
+    height 48px
+    font-size $site-font-size + 5
+    border 1px solid $color-4
+    align-items center
+
+    input
+      form-field-reset()
+      position relative
+      width 15px
+      height 15px
+      border 1px solid #989898
+      display inline-block
+      margin-right 10px
+
+      &:checked
+        &:after
+          content ''
+          display block
+          position absolute
+          right 0px
+          bottom 0
+          width 7px
+          height 18px
+          border-bottom: 3px solid $color-1;
+          border-right: 3px solid $color-1;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+
+  .checkbox, .is-btn
+    float right
+
+.selectize-input
+  border 1px solid #989898
+  border-radius 0
+  box-shadow none
+
+  &::-webkit-input-placeholder
+      font-size 21px
+      font-family $site-font-family
+      color #323232
+
+  &:-moz-placeholder
+     font-size 21px
+     font-family $site-font-family
+     color #323232
+
+  &::-moz-placeholder
+     font-size 21px
+     font-family $site-font-family
+     color #323232
+
+  &:-ms-input-placeholder
+     font-size 21px
+     font-family $site-font-family
+     color #323232
+
