@@ -73,7 +73,15 @@ define([
 
       this.currentParams = params;
 
-      $.when(this.setTitle()).then(_.bind(function() {
+      //console.log(this.getCartoCSS());
+
+      $.when(
+        this.setTitle(),
+        this.getCartoCSS()
+      )
+      .then(_.bind(function(title, styles) {
+
+        console.log(styles);
 
         if (!this.map) {
           this.createMap();
@@ -81,11 +89,11 @@ define([
 
         if (this.layer) {
           this.layer.setSQL(query);
-          this.layer.setCartoCSS(this.getCartoCSS());
+          this.layer.setCartoCSS(styles);
         } else {
           this.options.cartodb.sublayers = [{
             sql: query,
-            cartocss: this.getCartoCSS(),
+            cartocss: styles,
             interactivity: 'name, answerscore, project, value'
           }];
 
@@ -124,8 +132,6 @@ define([
           };
         }, this);
 
-        //console.log(dataArr);
-
         legend = new cdb.geo.ui.Legend({
           type: 'custom',
           data: dataArr
@@ -136,22 +142,34 @@ define([
     },
 
     getCartoCSS: function() {
+      var deferred = new $.Deferred();
+      var colorsArr = [];
 
       $.get(this.getLegendUrl(), _.bind(function(data) {
 
-        var colorsArr = _.map(data.rows, function(d, i) {
-          return {
-            colors: '#export_generic_prod_107_dp[answer='+d.choice +','+ d.criteria+'] {polygon-fill: '+this.options.colorsPath[i]+';}'
-          };
+        colorsArr = _.map(data.rows, function(d, i) {
+          return '#export_generic_prod_107_dp[answer=\'' + d.criteria + '\'] {polygon-fill: '+this.options.colorsPath[i]+';}';
         }, this);
 
-        //console.log(colorsArr);
-
-        return _.str.sprintf(CARTOCSS, {
+        return deferred.resolve(_.str.sprintf(CARTOCSS, {
           table: this.currentParams[0],
-          colors: colorsArr
-        });
+          colors: colorsArr.join(' ')
+        }));
+
       }, this));
+
+      // return _.str.sprintf(CARTOCSS, {
+      //   table: this.currentParams[0],
+      //   colors: colorsArr.join('')
+      // });
+
+      return deferred.promise();
+
+
+      // return _.str.sprintf(CARTOCSS, {
+      //   table: this.currentParams[0],
+      //   colors: '#export_generic_prod_107_dp[answer="Yes, administrative units accounting for all expenditures are presented."] {polygon-fill: #136400;}'
+      // });
     },
 
     getLegendUrl: function() {
