@@ -73,6 +73,12 @@ define([
 
       this.currentParams = params;
 
+      this.removeLegend();
+
+      if (this.layer) {
+        this.layer.hide();
+      }
+
       $.when(
         this.setTitle(),
         this.getCartoCSS()
@@ -83,11 +89,10 @@ define([
           this.createMap();
         }
 
-        this.removeLegend();
-
         if (this.layer) {
           this.layer.setSQL(query);
           this.layer.setCartoCSS(styles);
+          this.layer.show();
           this.setLegend();
         } else {
           this.options.cartodb.sublayers = [{
