@@ -17,6 +17,7 @@ define([
         zoom: 3,
         center: [0, 0]
       },
+      colors: ['#136400', '#FFA300', '#850200', '#FF0000', '#00FF00'],
       tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-dark/{z}/{x}/{y}.png',
       cartodb: {
         user_name: 'globalintegrity',
@@ -70,11 +71,13 @@ define([
         answer: params[1]
       });
 
-      var styles = _.str.sprintf(CARTOCSS, {
-        table: params.table
-      });
+      // var styles = _.str.sprintf(CARTOCSS, {
+      //   table: params.table
+      // });
 
       this.currentParams = params;
+
+      console.log(this.getCartoCSS());
 
       $.when(this.setTitle()).then(_.bind(function() {
 
@@ -84,11 +87,11 @@ define([
 
         if (this.layer) {
           this.layer.setSQL(query);
-          this.layer.setCartoCSS(styles);
+          this.layer.setCartoCSS(this.getCartoCSS());
         } else {
           this.options.cartodb.sublayers = [{
             sql: query,
-            cartocss: styles,
+            cartocss: this.getCartoCSS(),
             interactivity: 'name, answerscore, project, value'
           }];
 
@@ -115,21 +118,53 @@ define([
     },
 
     setLegend: function() {
-      var legend = new cdb.geo.ui.Legend({
-        type: 'custom',
-        data: [{
-          name: 'Yes, administrative units accounting for all expenditures are presented.',
-          value: '#136400'
-        }, {
-          name: 'No, expenditures are not presented by administrative unit.',
-          value: '#850200'
-        }, {
-          name: 'Yes, administrative units accounting for at least two-thirds of, but not all, expenditures are presented.',
-          value: '#FFA300'
-        }]
+      var dataArr = [],
+          legend,
+          colors = this.options.colors;
+
+      $.get(this.getLegendUrl(), _.bind(function(data) {
+
+        // _.each(data.rows, _.bind(function(d, i) {
+        //   dataArr.push({
+        //     name: d.choice +','+ d.criteria,
+        //     value: colors[i]
+        //   });
+        // }, this));
+
+        dataArr = _.map(data.rows, function(d, i) {
+          return {
+            name: d.choice +','+ d.criteria,
+            value: colors[i]
+          };
+        }, this);
+
+        legend = new cdb.geo.ui.Legend({
+          type: 'custom',
+          data: dataArr
+        });
+
+        this.$legend.html(legend.render().$el);
+      }, this));
+    },
+
+    getLegendUrl: function() {
+      return '//globalintegrity.cartodb.com/api/v1/sql?q=' + this.getLegendQuery();
+    },
+
+    getLegendQuery: function() {
+      return _.str.sprintf('SELECT choice, score, criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
+        table: this.currentParams[0],
+        question: this.currentParams[1]
       });
 
-      this.$legend.html(legend.render().$el);
+      //return 'SELECT choice, score, criteria FROM export_generic_prod_107_meta WHERE aspectid=\'Q8904\'';
+    },
+
+    getCartoCSS: function() {
+      return _.str.sprintf(CARTOCSS, {
+        table: this.currentParams[0],
+        colors: '#export_generic_prod_107_dp[answer="Yes, administrative units accounting for all expenditures are presented."] {polygon-fill: #136400;}'
+      });
     }
 
   });
