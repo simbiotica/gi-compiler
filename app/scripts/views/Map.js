@@ -73,15 +73,11 @@ define([
 
       this.currentParams = params;
 
-      //console.log(this.getCartoCSS());
-
       $.when(
         this.setTitle(),
         this.getCartoCSS()
       )
       .then(_.bind(function(title, styles) {
-
-        console.log(styles);
 
         if (!this.map) {
           this.createMap();
@@ -138,6 +134,7 @@ define([
         });
 
         this.$legend.html(legend.render().$el);
+
       }, this));
     },
 
@@ -148,7 +145,10 @@ define([
       $.get(this.getLegendUrl(), _.bind(function(data) {
 
         colorsArr = _.map(data.rows, function(d, i) {
-          return '#export_generic_prod_107_dp[answer=\'' + d.criteria + '\'] {polygon-fill: '+this.options.colorsPath[i]+';}';
+          return _.str.sprintf('#export_generic_prod_107_dp[answer=\'%(criteria)s\'] {polygon-fill: %(color)s;}', {
+            criteria: d.criteria,
+            color: this.options.colorsPath[i]
+          });
         }, this);
 
         return deferred.resolve(_.str.sprintf(CARTOCSS, {
@@ -158,18 +158,7 @@ define([
 
       }, this));
 
-      // return _.str.sprintf(CARTOCSS, {
-      //   table: this.currentParams[0],
-      //   colors: colorsArr.join('')
-      // });
-
       return deferred.promise();
-
-
-      // return _.str.sprintf(CARTOCSS, {
-      //   table: this.currentParams[0],
-      //   colors: '#export_generic_prod_107_dp[answer="Yes, administrative units accounting for all expenditures are presented."] {polygon-fill: #136400;}'
-      // });
     },
 
     getLegendUrl: function() {
