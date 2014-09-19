@@ -251,14 +251,6 @@ module.exports = function(grunt) {
     concurrent: {
       server: [
         'stylus'
-      ],
-      build: [
-        'copy:dist',
-        'stylus',
-        'cssmin',
-        'imagemin',
-        'svgmin',
-        'requirejs'
       ]
     }
 
@@ -287,7 +279,12 @@ module.exports = function(grunt) {
     'clean:dist',
     'bower',
     'useminPrepare',
-    'concurrent:build',
+    'copy:dist',
+    'stylus',
+    'requirejs'
+    'cssmin',
+    'imagemin',
+    'svgmin',
     'usemin',
     'htmlmin'
   ]);
