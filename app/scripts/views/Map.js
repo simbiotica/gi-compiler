@@ -88,6 +88,9 @@ define([
           this.layer.setCartoCSS(styles);
           this.layer.show();
           this.setLegend();
+
+          //console.log(styles);
+
         } else {
           this.options.cartodb.sublayers = [{
             sql: query,
