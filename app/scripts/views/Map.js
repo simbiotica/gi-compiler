@@ -86,12 +86,16 @@ define([
         if (this.layer) {
           this.layer.setSQL(query);
           this.layer.setCartoCSS(styles);
+          this.layer.show();
+          this.setLegend();
         } else {
           this.options.cartodb.sublayers = [{
             sql: query,
             cartocss: styles,
             interactivity: 'name, answerscore, project, value'
           }];
+
+          //console.log(styles);
 
           cartodb.createLayer(this.map, this.options.cartodb)
             .addTo(this.map)
@@ -128,10 +132,24 @@ define([
           };
         }, this);
 
-        legend = new cdb.geo.ui.Legend({
-          type: 'custom',
-          data: dataArr
-        });
+        if (data.rows[0].criteria === '') {
+
+          legend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: [
+              { name: '76 - 100', value: this.options.colorsPath[0]},
+              { name: '51 - 75', value: this.options.colorsPath[1]},
+              { name: '26 - 50', value: this.options.colorsPath[2]},
+              { name: '0 - 25', value: this.options.colorsPath[3]}
+            ]
+          });
+
+        } else {
+          legend = new cdb.geo.ui.Legend({
+            type: 'custom',
+            data: dataArr
+          });
+        }
 
         this.$legend.html(legend.render().$el);
 
@@ -144,12 +162,17 @@ define([
 
       $.get(this.getLegendUrl(), _.bind(function(data) {
 
+        console.log(data);
+
         colorsArr = _.map(data.rows, function(d, i) {
-          return _.str.sprintf('#export_generic_prod_107_dp[answer=\'%(criteria)s\'] {polygon-fill: %(color)s;}', {
-            criteria: d.criteria,
+          return _.str.sprintf('#export_generic_prod_%(table)s_meta[answer=\'%(criteria)s\'] {polygon-fill: %(color)s;}', {
+            table: this.currentParams[0],
+            criteria: (d.criteria === '') ? d.answerscore : d.criteria,
             color: this.options.colorsPath[i]
           });
         }, this);
+
+        console.log(colorsArr);
 
         return deferred.resolve(_.str.sprintf(CARTOCSS, {
           table: this.currentParams[0],
@@ -166,15 +189,14 @@ define([
     },
 
     getLegendQuery: function() {
-      return _.str.sprintf('SELECT choice, score, criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
+
+      return _.str.sprintf('SELECT export_generic_prod_%(table)s_meta.choice, export_generic_prod_%(table)s_meta.score, export_generic_prod_%(table)s_meta.criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
         table: this.currentParams[0],
         question: this.currentParams[1]
       });
     }
 
-
   });
 
   return MapView;
-
 });
