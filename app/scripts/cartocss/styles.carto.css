@@ -7,4 +7,8 @@
 
 %(colors)s
 
+#export_generic_prod_%(table)s_dp [answerscore <= 100] {polygon-fill: #136400;}
+#export_generic_prod_%(table)s_dp [answerscore <= 75] {polygon-fill: #FFA300;}
+#export_generic_prod_%(table)s_dp [answerscore <= 50] {polygon-fill: #850200;}
+#export_generic_prod_%(table)s_dp [answerscore <= 25] {polygon-fill: #FF0000;}
 
