@@ -25,7 +25,7 @@ define([
     },
 
     parse: function(data) {
-      return data.rows;
+      return _.sortBy(data.rows, 'depth');
     },
 
     getByTable: function(table, callback) {
