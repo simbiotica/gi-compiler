@@ -88,17 +88,12 @@ define([
           this.layer.setCartoCSS(styles);
           this.layer.show();
           this.setLegend();
-
-          //console.log(styles);
-
         } else {
           this.options.cartodb.sublayers = [{
             sql: query,
             cartocss: styles,
             interactivity: 'name, answerscore, project, value'
           }];
-
-          //console.log(styles);
 
           cartodb.createLayer(this.map, this.options.cartodb)
             .addTo(this.map)
@@ -164,9 +159,6 @@ define([
       var colorsArr = [];
 
       $.get(this.getLegendUrl(), _.bind(function(data) {
-
-        console.log(data);
-
         colorsArr = _.map(data.rows, function(d, i) {
           return _.str.sprintf('#export_generic_prod_%(table)s_meta[answer=\'%(criteria)s\'] {polygon-fill: %(color)s;}', {
             table: this.currentParams[0],
@@ -174,8 +166,6 @@ define([
             color: this.options.colorsPath[i]
           });
         }, this);
-
-        console.log(colorsArr);
 
         return deferred.resolve(_.str.sprintf(CARTOCSS, {
           table: this.currentParams[0],
