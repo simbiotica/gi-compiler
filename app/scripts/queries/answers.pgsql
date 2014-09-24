@@ -8,8 +8,16 @@ criterias.criterias,
 father,
 fatherdescription,
 answerscore,
-answervalue
-FROM export_generic_prod_%(table)s_dp dnorm,
+answervalue,
+level,
+CASE 
+WHEN depth~E'^\\d+$' 
+THEN depth::integer 
+ELSE 0 
+END
+as depth
+
+FROM export_generic_prod_23_dp dnorm,
 
 -- question+criterias SUB-select
 (SELECT aspectid,
@@ -44,6 +52,13 @@ criterias.criterias,
 father,
 fatherdescription,
 answerscore,
-answervalue
+answervalue,
+level,
+depth
 
-order by father asc,aspectid asc
+order by 
+CASE 
+WHEN depth~E'^\\d+$' 
+THEN depth::integer 
+ELSE 0 
+END ASC, father asc,aspectid asc
