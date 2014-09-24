@@ -17,7 +17,7 @@ ELSE 0
 END
 as depth
 
-FROM export_generic_prod_23_dp dnorm,
+FROM export_generic_prod_%(table)s_dp dnorm,
 
 -- question+criterias SUB-select
 (SELECT aspectid,
