@@ -10,6 +10,9 @@ fatherdescription,
 answerscore,
 answervalue,
 level,
+answersourcedescription,
+answercomments,
+criterias.aspectname,
 CASE 
 WHEN depth~E'^\\d+$' 
 THEN depth::integer 
@@ -20,14 +23,14 @@ as depth
 FROM export_generic_prod_%(table)s_dp dnorm,
 
 -- question+criterias SUB-select
-(SELECT aspectid,
+(SELECT aspectid, aspectname,
 (SELECT
 array(SELECT a.choice ||'|'||a.criteria
       FROM export_generic_prod_%(table)s_meta a
       where a.aspectid = b.aspectid
       )) as criterias
 FROM export_generic_prod_%(table)s_meta b
-GROUP BY aspectid, criterias
+GROUP BY aspectid, criterias, aspectname
 -- ORDER BY targetid
 ) criterias,
 
@@ -39,6 +42,8 @@ FROM export_generic_prod_%(table)s_meta b GROUP BY father, b.aspectid) fathers
 
 where dnorm.aspectid = criterias.aspectid
 AND dnorm.aspectid=fathers.aspectid
+AND answervalue is not null
+AND answervalue <>''
 
 %(targets)s
 %(questions)s
@@ -54,7 +59,10 @@ fatherdescription,
 answerscore,
 answervalue,
 level,
-depth
+depth,
+answersourcedescription,
+answercomments,
+criterias.aspectname
 
 order by 
 CASE 
