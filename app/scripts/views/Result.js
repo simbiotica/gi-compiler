@@ -20,6 +20,7 @@ define([
     },
 
     setListeners: function() {
+      Backbone.Events.on('Router:questions', this.empty, this);
       Backbone.Events.on('Toolbar:submit', this.showData, this);
       Backbone.Events.on('criteria:change', this.toggleCriteria, this);
     },

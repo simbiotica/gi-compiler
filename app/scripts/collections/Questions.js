@@ -25,13 +25,13 @@ define([
     },
 
     parse: function(data) {
-      return data.rows;
+      return _.sortBy(data.rows, 'depth');
     },
 
     getByTable: function(table, callback) {
       this.fetch({
         data: {
-          q: _.str.sprintf(QUERY, {table: table })
+          q: _.str.sprintf(QUERY, {table: table})
         },
         success: callback,
         error: function(response, err) {
