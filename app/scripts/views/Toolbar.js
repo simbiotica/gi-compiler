@@ -18,6 +18,14 @@ define([
     options: {
       selectize: {
         plugins: ['remove_button']
+      },
+      questions: {
+        plugins: ['remove_button'],
+        render: {
+          item: function(item, escape) {
+            return (item.text ? '<div><span class=\'id\'>' + escape(item.text.slice(0, 3)) + '</span></div>' : '');
+          }
+        }
       }
     },
 
@@ -45,7 +53,8 @@ define([
           targets: this.targetsCollection.toJSON(),
           questions: this.questionsCollection.toJSON()
         }))
-        .find('select').selectize(this.options.selectize);
+        .find('select[name=\'targets\']').selectize(this.options.selectize)
+        this.$el.find('select[name=\'questions\']').selectize(this.options.questions);
 
       this.setCriteria();
     },
