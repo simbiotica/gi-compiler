@@ -35,6 +35,8 @@ define([
             score: r.answerscore,
             target: r.targetname,
             targetId: r.targetid,
+            comments: r.answercomments,
+            sources: r.answersourcedescription,
             criterias: _.compact(_.map(r.criterias, function(c) {
               var criteria = c.split('|');
               if (criteria[0] !== '' && criteria[1] !== '') {
