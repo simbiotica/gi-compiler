@@ -53,8 +53,9 @@ define([
           targets: this.targetsCollection.toJSON(),
           questions: this.questionsCollection.toJSON()
         }))
-        .find('select[name=\'targets\']').selectize(this.options.selectize)
-        this.$el.find('select[name=\'questions\']').selectize(this.options.questions);
+        .find('select[name=\'targets\']').selectize(this.options.selectize);
+
+      this.$el.find('select[name=\'questions\']').selectize(this.options.questions);
 
       this.setCriteria();
     },

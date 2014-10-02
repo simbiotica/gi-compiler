@@ -38,6 +38,13 @@
                   <span class="value">{{value}}</span>
                   <h3>{{target}}</h3>
                   <p><strong>Score</strong>: {{score}}</p>
+                  {{#if sources}}
+                    <p><strong>Sources</strong>: {{sources}}</p>
+                  {{/if}}
+                  {{#if comments}}
+                    <p><strong>Comments</strong>: {{comments}}</p>
+                  {{/if}}
+
                 </div>
               {{/each}}
 
