@@ -56,6 +56,7 @@ define([
             return {
               id: q[0].id,
               text: q[0].text,
+              criterias: q[0].criterias,
               answers: q
             };
           })
