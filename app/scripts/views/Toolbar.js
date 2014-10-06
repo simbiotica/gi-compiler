@@ -17,7 +17,19 @@ define([
 
     options: {
       selectize: {
-        plugins: ['remove_button']
+        plugins: ['remove_button'],
+        onChange: function(values) {
+          _.each(values, _.bind(function(val) {
+            if (val === 'all') {
+              this.close();
+              _.each(values, _.bind(function(v){
+                if (v !== 'all') {
+                  this.removeItem(v);
+                }
+              }, this));
+            }
+          }, this));
+        }
       },
       questions: {
         plugins: ['remove_button'],
@@ -26,20 +38,18 @@ define([
             return (item.text ? '<div><span class=\'id\'>' + escape(item.text.slice(0, 3)) + '</span></div>' : '');
           }
         },
-        onChange: function(values, item) {
-
-          _.each(this.items, _.bind(function(val) {
-
+        onChange: function(values) {
+          _.each(values, _.bind(function(val) {
             if (val === 'all') {
-              _.each(this.items, _.bind(function(value){
-                if(value !== 'all') {
-                  this.removeItem(value);
+              this.close();
+              _.each(values, _.bind(function(v){
+                if (v !== 'all') {
+                  this.removeItem(v);
                 }
               }, this));
-            };
+            }
           }, this));
         }
-
       }
     },
 
@@ -70,8 +80,6 @@ define([
         .find('select[name=\'targets\']').selectize(this.options.selectize);
 
       this.$el.find('select[name=\'questions\']').selectize(this.options.questions);
-
-      this.$el.find('select[name=\'questions\']').selectize()
 
       this.setCriteria();
     },
