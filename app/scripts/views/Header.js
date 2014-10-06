@@ -47,7 +47,7 @@ define([
     },
 
     getUrl: function() {
-      return '//globalintegrity.cartodb.com/api/v1/sql?q=' + this.getQuery();
+      return '//globalintegrity.cartodb.com/api/v2/sql?q=' + this.getQuery();
     },
 
     getQuery: function() {
