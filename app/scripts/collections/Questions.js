@@ -9,7 +9,7 @@ define([
 
   var QuestionsCollection = Backbone.Collection.extend({
 
-    url: '//globalintegrity.cartodb.com/api/v1/sql',
+    url: '//globalintegrity.cartodb.com/api/v2/sql',
 
     initialize: function() {
       this.setListeners();
