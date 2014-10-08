@@ -59,7 +59,7 @@ require([
   new ResultView();
   new RankView();
 
-  new Router();
+  window.router = new Router();
 
   Backbone.history.start();
 

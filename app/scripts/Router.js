@@ -19,7 +19,7 @@ define([
     pages: {
       welcome: $('#welcomePage'),
       error: $('#errorPage'),
-      question: $('#questionPage'),
+      questions: $('#questionPage'),
       map: $('#mapPage'),
       rank: $('#rankPage'),
       notFound: $('#notFoundPage')
@@ -60,11 +60,11 @@ define([
         return this.activePage('error');
       }
 
-      this.activePage('question');
+      this.activePage('questions');
     },
 
-    map: function(table, answer) {
-      if (!this.validateTable(table) || !answer) {
+    map: function(table) {
+      if (!this.validateTable(table)) {
         return this.activePage('error');
       }
 
@@ -88,6 +88,7 @@ define([
         page.removeClass('is-active');
       });
 
+      Backbone.Events.trigger('setCurrent', currentPage);
       this.pages[currentPage].addClass('is-active');
     }
 

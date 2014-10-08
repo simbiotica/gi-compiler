@@ -27,6 +27,7 @@ define([
       Backbone.Events.on('Router:questions', this.setTitle, this);
       Backbone.Events.on('Router:map', this.setTitle, this);
       Backbone.Events.on('Router:rank', this.setTitle, this);
+      Backbone.Events.on('setCurrent', this.setCurrent, this);
     },
 
     render: function() {
@@ -35,6 +36,21 @@ define([
         table: this.currentParams[0],
         question: this.currentParams[1]
       }));
+
+      if (this.currentTitle.length > 40) {
+        $('#headerTitle').css('font-size', '30px');
+      }
+
+      _.each($('a'), _.bind(function(l) {
+        if ($(l).data('location') === this.current) {
+          $(l).addClass('is-current');
+        }
+      }, this));
+
+    },
+
+    setCurrent: function(currentPage) {
+      this.current = currentPage;
     },
 
     setTitle: function(params) {

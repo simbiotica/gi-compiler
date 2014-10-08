@@ -68,7 +68,39 @@ define([
     },
 
     setListeners: function() {
-      Backbone.Events.on('Router:questions', this.showData, this);
+      Backbone.Events.on('Router:questions', this.setLocation, this);
+      Backbone.Events.on('Router:map', this.setLocation, this);
+      Backbone.Events.on('toggleToolbar', this.toggle, this);
+    },
+
+    setupSelects: function() {
+      var $target = $('select[name=\'targets\']').selectize(this.options.selectize),
+        $checkbox = $('input[type=\'checkbox\'');
+
+      if (this.location === 'map') {
+
+        _.extend(this.options.questions, {maxItems: 1, allowEmptyOption: false});
+
+        var $question = $('select[name=\'questions\']').selectize(this.options.questions);
+
+        $target[0].selectize.disable();
+
+        $question[0].selectize.removeOption('all');
+        $question.attr('required', 'required');
+
+        $checkbox.parent().css('display', 'none');
+
+      } else {
+
+        $target[0].selectize.enable();
+        $checkbox.removeAttr('disabled');
+
+        if (this.options.questions.maxItems) {
+          delete this.options.questions.maxItems;
+        }
+
+        $('select[name=\'questions\']').selectize(this.options.questions);
+      }
     },
 
     render: function() {
@@ -76,12 +108,15 @@ define([
           table: this.table,
           targets: this.targetsCollection.toJSON(),
           questions: this.questionsCollection.toJSON()
-        }))
-        .find('select[name=\'targets\']').selectize(this.options.selectize);
+        }));
 
-      this.$el.find('select[name=\'questions\']').selectize(this.options.questions);
+      this.setupSelects();
 
       this.setCriteria();
+    },
+
+    toggle: function() {
+      this.$el.toggleClass('is-hidden');
     },
 
     empty: function() {
@@ -104,9 +139,30 @@ define([
         }
       });
 
-      Backbone.Events.trigger('Toolbar:submit', result);
+      if (this.location === 'map') {
+        window.router.navigate('#map/' + result.table + '/' + result.questions, {trigger : true});
+      } else {
+        Backbone.Events.trigger('Toolbar:submit', result);
+      }
 
       return false;
+    },
+
+    setLocation: function(params) {
+      var hasthtag = window.location.hash;
+      var url = hasthtag.split('/');
+
+      this.location = url[0].slice(1, url[0].length);
+
+      this.$el.addClass('is-hidden');
+      $('#mapView').removeClass('is-hidden');
+
+      this.showData(params);
+
+      if (url.length !== 3) {
+        this.$el.removeClass('is-hidden');
+        $('#mapView').addClass('is-hidden');
+      }
     },
 
     showData: function(params) {
