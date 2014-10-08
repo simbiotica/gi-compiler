@@ -1,13 +1,9 @@
 <h1 id="headerTitle">{{title}}</h1>
 <nav class="mod-nav is-unprintable">
   <ul>
-    {{#if table}}
-      <li><a href="#questions/{{table}}">List</a></li>
-    {{/if}}
-    {{#if question}}
-      <li><a href="#map/{{table}}/{{question}}">Map</a></li>
+      <li><a href="#questions/{{table}}" data-location="questions">List</a></li>
+      <li><a href="#map/{{table}}" data-location="map">Map</a></li>
       {{!-- <li><a href="#rank/{{table}}/{{question}}">Rank</a></li> --}}
-    {{/if}}
-    <li><button id="printBtn" type="button">Print</button></li>
+      <li><button id="printBtn" type="button">Print</button></li>
   </ul>
 </nav>
