@@ -28,6 +28,12 @@ define([
 
     el: '#mapView',
 
+    events: {
+      'click input' : 'loadToolbar',
+      'click #expand' : 'expandTitle',
+      'click #contract' : 'contractTitle'
+    },
+
     initialize: function() {
       this.$title = $('#mapTitle');
       this.$legend = $('#mapLegend');
@@ -36,6 +42,22 @@ define([
 
     setListeners: function() {
       Backbone.Events.on('Router:map', this.setLayer, this);
+      //Backbone.Events.on('Toolbar:submit', this.setLayer, this);
+    },
+
+    expandTitle: function(e) {
+      e.preventDefault();
+      var text = this.completeTitle + ' <a id=\'contract\' href=\'#\'>[<span class=\'bold\'>x</span>]</a>';
+      this.$title.html(text);
+    },
+
+    contractTitle: function(e) {
+      e.preventDefault();
+      this.$title.html(this.title);
+    },
+
+    loadToolbar: function() {
+      Backbone.Events.trigger('toggleToolbar');
     },
 
     createMap: function() {
@@ -47,7 +69,17 @@ define([
       var deferred = new $.Deferred();
 
       $.get(this.getUrl(), _.bind(function(data) {
-        this.$title.text(data.rows[0].title);
+
+        this.title = data.rows[0].title;
+
+        if (this.title.length > 225) {
+          var text = _.str.chop(this.title, 225);
+
+          text[0] += '... <a id=\'expand\' href=\'#\'>[...]</a>';
+          this.completeTitle = this.title;
+          this.title = text[0];
+        }
+        this.$title.html(this.title);
         deferred.resolve();
       }, this));
 
@@ -66,49 +98,52 @@ define([
     },
 
     setLayer: function(params) {
-      var query = _.str.sprintf(QUERY, {
-        table: params[0],
-        answer: params[1]
-      });
 
-      this.currentParams = params;
+      if (params[1]) {
 
-      $.when(
-        this.setTitle(),
-        this.getCartoCSS()
-      )
-      .then(_.bind(function(title, styles) {
+        var query = _.str.sprintf(QUERY, {
+          table: params[0],
+          answer: params[1]
+        });
 
-        if (!this.map) {
-          this.createMap();
-        }
+        this.currentParams = params;
 
-        if (this.layer) {
-          this.layer.setSQL(query);
-          this.layer.setCartoCSS(styles);
-          this.layer.show();
-          this.setLegend();
-        } else {
-          this.options.cartodb.sublayers = [{
-            sql: query,
-            cartocss: styles,
-            interactivity: 'name, answerscore, project, value'
-          }];
+        $.when(
+          this.setTitle(),
+          this.getCartoCSS()
+        )
+        .then(_.bind(function(title, styles) {
 
-          cartodb.createLayer(this.map, this.options.cartodb)
-            .addTo(this.map)
-            .on('done', _.bind(function(layer) {
-              this.layer = layer.getSubLayer(0);
-              this.setInfowindow();
-              this.setLegend();
-            }, this))
-            .on('error', function(err) {
-              throw 'some error occurred: ' + err;
-            });
-        }
+          if (!this.map) {
+            this.createMap();
+          }
 
-      }, this));
+          if (this.layer) {
+            this.layer.setSQL(query);
+            this.layer.setCartoCSS(styles);
+            this.layer.show();
+            this.setLegend();
+          } else {
+            this.options.cartodb.sublayers = [{
+              sql: query,
+              cartocss: styles,
+              interactivity: 'name, answerscore, project, value'
+            }];
 
+            cartodb.createLayer(this.map, this.options.cartodb)
+              .addTo(this.map)
+              .on('done', _.bind(function(layer) {
+                this.layer = layer.getSubLayer(0);
+                this.setInfowindow();
+                this.setLegend();
+              }, this))
+              .on('error', function(err) {
+                throw 'some error occurred: ' + err;
+              });
+          }
+
+        }, this));
+      }
     },
 
     setInfowindow: function() {
