@@ -74,25 +74,32 @@ define([
     },
 
     setupSelects: function() {
-      var $target = $('select[name=\'targets\']').selectize(this.options.selectize),
-        $checkbox = $('input[type=\'checkbox\'');
+      var $checkbox = $('input[type=\'checkbox\'');
+
+      $('select[name=\'targets\']').selectize(this.options.selectize);
 
       if (this.location === 'map') {
 
-        _.extend(this.options.questions, {maxItems: 1, allowEmptyOption: false});
+        _.extend(this.options.questions, {maxItems: 1});
 
         var $question = $('select[name=\'questions\']').selectize(this.options.questions);
 
-        $target[0].selectize.disable();
-
-        $question[0].selectize.removeOption('all');
-        $question.attr('required', 'required');
+        $('.grid-8').removeClass('grid-8').addClass('grid-12');
+        $('.grid-4').next().find('.selectize-control').css('width', '100%');
+        $('.grid-4').addClass('is-hidden');
+        $('.grid-2').addClass('is-hidden');
 
         $checkbox.parent().css('display', 'none');
+        $question[0].selectize.removeOption('all');
+
+        $question.on('change', _.bind(function(){
+          this.onSubmit();
+        }, this));
 
       } else {
 
-        $target[0].selectize.enable();
+        $('.grid-4').removeClass('is-hidden');
+        $('.grid-8').find('.form-row').children().css('width', '100%');
         $checkbox.removeAttr('disabled');
 
         if (this.options.questions.maxItems) {
@@ -104,10 +111,19 @@ define([
     },
 
     render: function() {
+      var map;
+
+      if (this.location === 'map') {
+        map = true;
+      }
+
+      this.$el.removeAttr('style');
+
       this.$el.html(this.template({
           table: this.table,
           targets: this.targetsCollection.toJSON(),
-          questions: this.questionsCollection.toJSON()
+          questions: this.questionsCollection.toJSON(),
+          map: map
         }));
 
       this.setupSelects();
@@ -116,7 +132,31 @@ define([
     },
 
     toggle: function() {
-      this.$el.toggleClass('is-hidden');
+
+      if ($('.mod-toolbar').hasClass('is-hidden')) {
+
+        $('.mod-toolbar').height('0');
+
+        $('.mod-toolbar').css('visibility', 'hidden');
+        $('.mod-toolbar').css('display', 'block');
+
+        $('.mod-toolbar').height('134');
+
+        $('.mod-toolbar').removeClass('is-hidden');
+
+        window.setTimeout(function(){
+          $('.mod-toolbar').css('visibility', 'visible');
+        }, 300);
+
+      } else {
+
+        $('.mod-toolbar').height('0');
+
+        $('.mod-toolbar').addClass('is-hidden');
+
+        $('.mod-toolbar').css('padding', '0');
+        $('.mod-toolbar').css('visibility', 'hidden');
+      }
     },
 
     empty: function() {

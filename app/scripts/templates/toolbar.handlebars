@@ -1,10 +1,13 @@
-<p>To customize the report, select the desired targets, then questions you wish to review then click Apply to display. Check Criteria if you wish the answer criteria to be listed for each question.</p>
-
+{{#if map}}
+  <p>To customize the map, select the desired question you wish to review.</p>
+{{else}}
+  <p>To customize the report, select the desired targets, then questions you wish to review then click Apply to display. Check Criteria if you wish the answer criteria to be listed for each question.</p>
+{{/if}}
 <form>
   <div class="row">
     <div class="grid-4">
       <div class="form-row">
-        <label>1.</label>
+        {{!-- <label>1.</label> --}}
         <select name="targets" data-placeholder="Select targets" multiple>
           <option value="all">All targets</option>
           {{#each targets}}
@@ -15,13 +18,21 @@
     </div>
     <div class="grid-8">
       <div class="form-row">
-        <label>2.</label>
-        <select name="questions" placeholder="Select questions" multiple>
-          <option value="all">All questions</option>
-          {{#each questions}}
-            <option value="{{id}}">{{name}}</option>
-          {{/each}}
-        </select>
+        {{!-- <label>2.</label> --}}
+        {{#if map}}
+          <select name="questions" placeholder="Select question" multiple>
+            {{#each questions}}
+              <option value="{{id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        {{else}}
+          <select name="questions" placeholder="Select questions" multiple>
+            <option value="all">All questions</option>
+            {{#each questions}}
+              <option value="{{id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        {{/if}}
       </div>
     </div>
     <div class="grid-2">
