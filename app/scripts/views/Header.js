@@ -44,6 +44,18 @@ define([
       _.each($('a'), _.bind(function(l) {
         if ($(l).data('location') === this.current) {
           $(l).addClass('is-current');
+
+          if (this.current === 'map') {
+            var printBtn = $('#printBtn');
+            printBtn.addClass('is-disabled');
+            printBtn.addClass('is-disabled:hover');
+            this.undelegateEvents();
+            printBtn.hover(function(){
+              $(this).css('text-decoration', 'none');
+            });
+          } else {
+            this.delegateEvents({'click #printBtn' : 'print'});
+          }
         }
       }, this));
 
