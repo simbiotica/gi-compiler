@@ -1,6 +1,9 @@
 <h1 id="headerTitle">{{title}}</h1>
 <nav class="mod-nav is-unprintable">
   <ul>
+    {{#if client}}
+      <li><a href="#client/{{client}}">Home</a></li>
+    {{/if}}
       <li><a href="#questions/{{table}}" data-location="questions">List</a></li>
       <li><a href="#map/{{table}}" data-location="map">Map</a></li>
       {{!-- <li><a href="#rank/{{table}}/{{question}}">Rank</a></li> --}}
