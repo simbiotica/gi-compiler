@@ -34,4 +34,8 @@ text!templates/result.handlebars
 views/Result.js
 text!templates/rank.handlebars
 views/Rank.js
+text!queries/client.pgsql
+collections/Products.js
+text!templates/client.handlebars
+views/Client.js
 main.js

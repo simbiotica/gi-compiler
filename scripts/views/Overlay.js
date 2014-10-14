@@ -1,0 +1,1 @@
+"use strict";define(["backbone"],function(e){var t=e.View.extend({el:"",initialize:function(){},_getURL:function(){},_render:function(){this.$el.html()}});return t});
