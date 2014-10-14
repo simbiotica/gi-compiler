@@ -13,10 +13,10 @@ level,
 answersourcedescription,
 answercomments,
 criterias.aspectname,
-CASE 
-WHEN depth~E'^\\d+$' 
-THEN depth::integer 
-ELSE 0 
+CASE
+WHEN depth::text~E'^\\d+$'
+THEN depth::integer
+ELSE 0
 END
 as depth
 
@@ -64,9 +64,9 @@ answersourcedescription,
 answercomments,
 criterias.aspectname
 
-order by 
-CASE 
-WHEN depth~E'^\\d+$' 
-THEN depth::integer 
-ELSE 0 
+order by
+CASE
+WHEN depth::text~E'^\\d+$'
+THEN depth::integer
+ELSE 0
 END ASC, father asc,aspectid asc

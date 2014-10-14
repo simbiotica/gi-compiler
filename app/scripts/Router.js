@@ -10,6 +10,7 @@ define([
     routes: {
       '': 'welcome',
       'error': 'error',
+      'client/:id': 'client',
       'questions(/:table)': 'questions',
       'map(/:table)(/:answer)': 'map',
       'rank(/:table)(/:answer)': 'rank',
@@ -19,6 +20,7 @@ define([
     pages: {
       welcome: $('#welcomePage'),
       error: $('#errorPage'),
+      client: $('#clientPage'),
       questions: $('#questionPage'),
       map: $('#mapPage'),
       rank: $('#rankPage'),
@@ -53,6 +55,14 @@ define([
 
     notFound: function() {
       this.activePage('notFound');
+    },
+
+    client: function(id) {
+      if (!this.validateTable(id)) {
+        return this.activePage('error');
+      }
+
+      this.activePage('client');
     },
 
     questions: function(table) {

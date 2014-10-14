@@ -1,5 +1,9 @@
 .mod-toolbar
+  height 170px
   padding 20px 0
+  transition: height .3s
+  -webkit-transition-timing-function: ease-out; /* Safari and Chrome */
+  transition-timing-function: ease-out;
 
   .grid-2
     float right
@@ -61,23 +65,23 @@
   border-radius 0
   box-shadow none
 
-  &::-webkit-input-placeholder
-      font-size 21px
-      font-family $site-font-family
-      color #323232
+.selectize-input:-webkit-input-placeholder
+    font-size 21px
+    font-family $site-font-family
+    color #323232
 
-  &:-moz-placeholder
-     font-size 21px
-     font-family $site-font-family
-     color #323232
+.selectize-input:-moz-placeholder
+   font-size 21px
+   font-family $site-font-family
+   color #323232
 
-  &::-moz-placeholder
-     font-size 21px
-     font-family $site-font-family
-     color #323232
+.selectize-input::-moz-placeholder
+   font-size 21px
+   font-family $site-font-family
+   color #323232
 
-  &:-ms-input-placeholder
-     font-size 21px
-     font-family $site-font-family
-     color #323232
+.selectize-input:-ms-input-placeholder
+   font-size 21px
+   font-family $site-font-family
+   color #323232
 

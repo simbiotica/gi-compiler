@@ -6,8 +6,9 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
-  'text!templates/header.handlebars'
-], function($, _, underscoreString, Backbone, Handlebars, tpl) {
+  'text!templates/header.handlebars',
+  'text!queries/check_id.pgsql'
+], function($, _, underscoreString, Backbone, Handlebars, tpl, query) {
 
   var HeaderView = Backbone.View.extend({
 
@@ -30,12 +31,7 @@ define([
       Backbone.Events.on('setCurrent', this.setCurrent, this);
     },
 
-    render: function() {
-      this.$el.html(this.template({
-        title: this.currentTitle,
-        table: this.currentParams[0],
-        question: this.currentParams[1]
-      }));
+    _setupHeader: function() {
 
       if (this.currentTitle.length > 40) {
         $('#headerTitle').css('font-size', '30px');
@@ -44,9 +40,62 @@ define([
       _.each($('a'), _.bind(function(l) {
         if ($(l).data('location') === this.current) {
           $(l).addClass('is-current');
+
+          if (this.current === 'map') {
+            var printBtn = $('#printBtn');
+            printBtn.addClass('is-disabled');
+            printBtn.addClass('is-disabled:hover');
+            this.undelegateEvents();
+            printBtn.hover(function(){
+              $(this).css('text-decoration', 'none');
+            });
+          } else {
+            this.delegateEvents({'click #printBtn' : 'print'});
+          }
         }
       }, this));
+    },
 
+    // _checkClientId: function() {
+
+    //   $.ajax({
+    //     url: '//globalintegrity.cartodb.com/api/v2/sql',
+    //     data: {
+    //       q: _.str.sprintf(query, {
+    //         id : localStorage.getItem('client'),
+    //         product_id: this.currentParams[0]
+    //       })
+    //     },
+    //     success: _.bind(onSuccess, this),
+    //     fail: function(err) {
+    //       throw err;
+    //     }
+    //   });
+
+
+    //   function onSuccess(data) {
+
+    //     var valid = data.rows[0].valid;
+
+    //     if (!valid) {
+    //       localStorage.clear();
+    //     }
+
+    //     this.render();
+    //   }
+    // },
+
+    render: function() {
+      $('.layout-header').removeClass('is-hidden');
+
+      this.$el.html(this.template({
+        client: localStorage.getItem('client'),
+        title: this.currentTitle,
+        table: this.currentParams[0],
+        question: this.currentParams[1]
+      }));
+
+      this._setupHeader();
     },
 
     setCurrent: function(currentPage) {
