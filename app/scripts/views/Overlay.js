@@ -14,7 +14,7 @@ define([
 
     _getURL: function() {
 
-    }
+    },
 
     _render: function() {
       this.$el.html();
