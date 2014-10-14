@@ -1,0 +1,20 @@
+<div class="wrap">
+  <div class="row">
+    <div class="grid-12">
+    {{#if client}}
+      <p>Welcome, {{client}}</p>
+      {{#if products}}
+        <p>Your products:</p>
+        <ul>
+          {{#each products}}
+            <li><a href="#questions/{{product_id}}">{{product_name}}</a></li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{else}}
+      <p>Client not found</p>
+    {{/if}}
+
+    </div>
+  </div>
+</div>
