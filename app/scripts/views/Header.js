@@ -7,8 +7,7 @@ define([
   'backbone',
   'handlebars',
   'text!templates/header.handlebars',
-  'text!queries/check_id.pgsql'
-], function($, _, underscoreString, Backbone, Handlebars, tpl, query) {
+], function($, _, underscoreString, Backbone, Handlebars, tpl) {
 
   var HeaderView = Backbone.View.extend({
 
