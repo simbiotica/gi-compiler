@@ -4,8 +4,8 @@
   line-width: 1;
   line-opacity: 1;
 }
-%(colors)s
 #export_generic_prod_%(table)s_dp [answerscore <= 100] {polygon-fill: rgb(104,208,55);}
 #export_generic_prod_%(table)s_dp [answerscore <= 75] {polygon-fill: rgb(255,255,169);}
 #export_generic_prod_%(table)s_dp [answerscore <= 50] {polygon-fill: rgb(255,158,0);}
 #export_generic_prod_%(table)s_dp [answerscore <= 25] {polygon-fill: rgb(255,21,0);}
+%(colors)s
