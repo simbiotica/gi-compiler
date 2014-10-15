@@ -26,6 +26,7 @@ define([
 
     _getProducts: function(id) {
       this.collection.getByClient(id[0], _.bind(this._render, this));
+      Backbone.Events.trigger('collection:done');
       localStorage.setItem('client', id[0]);
     },
 
