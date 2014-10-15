@@ -17,7 +17,7 @@ define([
         zoom: 3,
         center: [0, 0]
       },
-      colorsPath: ['#136400', '#FFA300', '#850200', '#FF0000', '#00FF00'],
+      colorsPath: ['#078D00', '#68D037', '#FFFFA9', '#FF9E00', '#FF1500'],
       tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-dark/{z}/{x}/{y}.png',
       cartodb: {
         user_name: 'globalintegrity',
@@ -42,6 +42,7 @@ define([
 
     setListeners: function() {
       Backbone.Events.on('Router:map', this.setLayer, this);
+      Backbone.Events.on('Router:embedMap', this.setLayer, this);
       //Backbone.Events.on('Toolbar:submit', this.setLayer, this);
     },
 
