@@ -30,7 +30,6 @@ define([
     },
 
     _render: function() {
-
       $('.layout-header').addClass('is-hidden');
 
       this.$el.html(this.template({

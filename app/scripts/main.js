@@ -50,8 +50,9 @@ require([
   'views/Toolbar',
   'views/Result',
   'views/Rank',
-  'views/Client'
-], function($, Backbone, Router, SpinView, HeaderView, MapView, ToolbarView, ResultView, RankView, ClientView) {
+  'views/Client',
+  'views/Overlay'
+], function($, Backbone, Router, SpinView, HeaderView, MapView, ToolbarView, ResultView, RankView, ClientView, OverlayView) {
 
   new SpinView();
   new HeaderView();
@@ -60,6 +61,7 @@ require([
   new ResultView();
   new RankView();
   new ClientView();
+  new OverlayView();
 
   window.router = new Router();
 

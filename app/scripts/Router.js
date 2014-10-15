@@ -13,6 +13,7 @@ define([
       'client/:id': 'client',
       'questions(/:table)': 'questions',
       'map(/:table)(/:answer)': 'map',
+      'map/:table/:answer/embed': 'embedMap',
       'rank(/:table)(/:answer)': 'rank',
       '*any': 'notFound'
     },
@@ -78,6 +79,15 @@ define([
         return this.activePage('error');
       }
 
+      //$('body').removeClass('is-embed');
+
+      this.activePage('map');
+    },
+
+    embedMap: function() {
+
+      $('body').addClass('is-embed');
+
       this.activePage('map');
     },
 
@@ -98,7 +108,9 @@ define([
         page.removeClass('is-active');
       });
 
+      $('#overlayView').addClass('is-hidden');
       Backbone.Events.trigger('setCurrent', currentPage);
+
       this.pages[currentPage].addClass('is-active');
     }
 

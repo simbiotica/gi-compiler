@@ -1,10 +1,144 @@
 .mod-overlay
   position absolute
-  width 500px
-  height 250px
-  background-color $white
-  top 50%
+  top 0
   bottom 0
   right 0
-  left 50%
+  left 0
   z-index 10000000
+
+  &.contact
+    display none
+
+    h2
+      font-size 21px
+
+  &.social-share
+    display none
+
+    .info-window
+      width 60%
+
+  &.contact .info-window
+    max-width 650px
+
+    .wrapper
+      max-height 600px
+      overflow-y scroll
+
+  .mod-social-media
+    margin 0 auto
+
+  h2
+    font-size 21px
+    font-family $site-font-family
+    color $black
+    text-align center
+    margin-bottom 30px
+
+    &.share
+      width 60%
+      margin 0 auto
+      margin-bottom 25px
+      padding-bottom 15px
+      border-bottom 1px solid rgba(#666666, .1)
+
+  p
+    margin-bottom 25px
+    color $site-font-color
+    text-align center
+    color $gray
+
+    &.share
+       margin-bottom 20px
+
+    &.follow
+      width 50%
+      padding-top 20px
+      margin 20px auto
+      border-top 1px solid rgba(#666666, .1)
+
+  .checkbox-wrapper
+    text-align center
+    margin-bottom 20px
+
+  input[type="checkbox"]
+    form-field-reset()
+    checked($color-01, 4px, 0, 14px, 2px)
+    border 1px solid #ddd
+    width 15px
+    height 15px
+
+  label
+    position relative
+    top -3px
+    right -5px
+    color $site-font-color
+    font-size 14px
+
+.social-share &
+  p
+    text-align center
+
+.welcome-overlay &
+  p
+    text-align center
+
+.overlay-bg
+  position: fixed
+  top: 0
+  bottom: 0
+  right: 0
+  left: 0
+  background-color: rgba(0,0,0, 0.5)
+
+.close
+  form-field-reset()
+  position absolute
+  top -25px
+  right -23px
+  width 45px
+  height 45px
+  border-radius 50%
+  border 1px solid #d1d1d1
+  background url('../images/close.svg') no-repeat center #fff
+
+.info-window
+  center()
+  position fixed
+  width 75%
+  max-width 700px
+  box-sizing border-box
+  padding 40px
+  background-color $white
+
+
+.share-link
+  width 95%
+  padding 5px
+  margin-bottom 20px
+  display flex
+  flex-direction row
+  justify-content flex-end
+  margin 0 auto
+  height 35px
+  border 1px solid $color-05
+
+  input
+    width 80%
+
+.share-btn
+  form-field-reset()
+  background-color $white
+  color $red
+  margin-left 5px
+  padding 5px 20px
+
+
+.btn-is-active
+  background-color $red
+  color $white
+
+
+
+
+
