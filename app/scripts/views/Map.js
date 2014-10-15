@@ -17,8 +17,8 @@ define([
         zoom: 3,
         center: [0, 0]
       },
-      colorsPath: ['#136400', '#FFA300', '#850200', '#FF0000', '#00FF00'],
-      tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-dark/{z}/{x}/{y}.png',
+      colorsPath: ['#078D00', '#68D037', '#FFFFA9', '#FF9E00', '#FF1500'],
+      tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-light/{z}/{x}/{y}.png',
       cartodb: {
         user_name: 'globalintegrity',
         type: 'cartodb',
@@ -42,6 +42,7 @@ define([
 
     setListeners: function() {
       Backbone.Events.on('Router:map', this.setLayer, this);
+      Backbone.Events.on('Router:embedMap', this.setLayer, this);
       //Backbone.Events.on('Toolbar:submit', this.setLayer, this);
     },
 
@@ -217,7 +218,6 @@ define([
     },
 
     getLegendQuery: function() {
-
       return _.str.sprintf('SELECT export_generic_prod_%(table)s_meta.choice, export_generic_prod_%(table)s_meta.score, export_generic_prod_%(table)s_meta.criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
         table: this.currentParams[0],
         question: this.currentParams[1]

@@ -14,7 +14,8 @@ define([
     el: '#headerView',
 
     events: {
-      'click #printBtn': 'print'
+      'click #printBtn': '_print',
+      'click #embedBtn' : '_getEmbedMap'
     },
 
     template: Handlebars.compile(tpl),
@@ -26,8 +27,14 @@ define([
     setListeners: function() {
       Backbone.Events.on('Router:questions', this.setTitle, this);
       Backbone.Events.on('Router:map', this.setTitle, this);
+      Backbone.Events.on('Router:embedMap', this.setTitle, this);
       Backbone.Events.on('Router:rank', this.setTitle, this);
       Backbone.Events.on('setCurrent', this.setCurrent, this);
+    },
+
+    _getEmbedMap: function(e) {
+      e.preventDefault();
+      $('#overlayView').toggleClass('is-hidden');
     },
 
     _setupHeader: function() {
@@ -36,21 +43,15 @@ define([
         $('#headerTitle').css('font-size', '30px');
       }
 
+      if (this.currentParams[1]) {
+        $('#embedBtn').removeAttr('disabled');
+      } else {
+        $('#embedBtn').addClass('is-disabled');
+      }
+
       _.each($('a'), _.bind(function(l) {
         if ($(l).data('location') === this.current) {
           $(l).addClass('is-current');
-
-          if (this.current === 'map') {
-            var printBtn = $('#printBtn');
-            printBtn.addClass('is-disabled');
-            printBtn.addClass('is-disabled:hover');
-            this.undelegateEvents();
-            printBtn.hover(function(){
-              $(this).css('text-decoration', 'none');
-            });
-          } else {
-            this.delegateEvents({'click #printBtn' : 'print'});
-          }
         }
       }, this));
     },
@@ -85,10 +86,17 @@ define([
     // },
 
     render: function() {
+      var map;
+
       $('.layout-header').removeClass('is-hidden');
+
+      if (this.current === 'map') {
+        map = true;
+      }
 
       this.$el.html(this.template({
         client: localStorage.getItem('client'),
+        map: map,
         title: this.currentTitle,
         table: this.currentParams[0],
         question: this.currentParams[1]
@@ -120,7 +128,7 @@ define([
       });
     },
 
-    print: function() {
+    _print: function() {
       window.print();
     }
 

@@ -26,4 +26,30 @@ centery()
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 
+center()
+  position relative
+  top 50%
+  left 50%
+  -webkit-transform translate(-50%, -50%)
+  transform translate(-50%, -50%)
+
+arrow($width, $height, $right, $bottom, $color, $rotate)
+    content ''
+    position absolute
+    right $right
+    bottom $bottom
+    width $height
+    height $height
+    border-bottom $width solid $color
+    border-right $width solid $color
+    transform rotate($rotate)
+
+form-field-reset()
+  -webkit-appearance none
+  appearance none
+  box-shadow none
+  background none
+  border 0
+  &:focus
+    outline none
 

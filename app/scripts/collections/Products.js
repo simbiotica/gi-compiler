@@ -16,6 +16,9 @@ define([
     },
 
     getByClient: function(id, callback) {
+
+      Backbone.Events.trigger('collection:fetch');
+
       this.fetch({
         data: {
           q: _.str.sprintf(query, {id: id})
