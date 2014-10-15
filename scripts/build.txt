@@ -38,4 +38,6 @@ text!queries/client.pgsql
 collections/Products.js
 text!templates/client.handlebars
 views/Client.js
+text!templates/overlay.handlebars
+views/Overlay.js
 main.js
