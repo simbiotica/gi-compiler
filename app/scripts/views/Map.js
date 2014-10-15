@@ -218,7 +218,6 @@ define([
     },
 
     getLegendQuery: function() {
-
       return _.str.sprintf('SELECT export_generic_prod_%(table)s_meta.choice, export_generic_prod_%(table)s_meta.score, export_generic_prod_%(table)s_meta.criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
         table: this.currentParams[0],
         question: this.currentParams[1]
