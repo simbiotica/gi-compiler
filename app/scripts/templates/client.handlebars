@@ -1,10 +1,10 @@
-<div class="wrap">
+<div class="wrap mod-client">
   <div class="row">
     <div class="grid-12">
     {{#if client}}
-      <p>Welcome, {{client}}</p>
+      <h1>Welcome, {{client}}</h1>
       {{#if products}}
-        <p>Your products:</p>
+        {{!-- <p>Your products:</p> --}}
         <ul>
           {{#each products}}
             <li><a href="#questions/{{product_id}}">{{product_name}}</a></li>

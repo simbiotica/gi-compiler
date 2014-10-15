@@ -18,7 +18,7 @@ define([
         center: [0, 0]
       },
       colorsPath: ['#078D00', '#68D037', '#FFFFA9', '#FF9E00', '#FF1500'],
-      tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-dark/{z}/{x}/{y}.png',
+      tileUrl: 'https://cartocdn_{s}.global.ssl.fastly.net/base-light/{z}/{x}/{y}.png',
       cartodb: {
         user_name: 'globalintegrity',
         type: 'cartodb',
