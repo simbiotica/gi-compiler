@@ -26,4 +26,4 @@ For production
 
 ## Deploy to gh-pages
 
-    grunt gh-pages
+    grunt deploy
