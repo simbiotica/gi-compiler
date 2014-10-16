@@ -35,12 +35,7 @@ define([
         plugins: ['remove_button'],
         render: {
           item: function(item, escape) {
-
-            console.log(typeof item);
-
             var array = item.text.split(' ');
-            console.log(array);
-
             return (item.text ? '<div><span class=\'id\'>' + escape(array[0]) + '</span></div>' : '');
           }
         },
