@@ -2,6 +2,7 @@
 .DS_Store
 .tmp
 .grunt
+todo.todo
 node_modules
 bower_components
 dist

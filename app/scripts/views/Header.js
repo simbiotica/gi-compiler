@@ -6,8 +6,9 @@ define([
   'underscoreString',
   'backbone',
   'handlebars',
+  'collections/Products',
   'text!templates/header.handlebars',
-], function($, _, underscoreString, Backbone, Handlebars, tpl) {
+], function($, _, underscoreString, Backbone, Handlebars, ProductsCollection, tpl) {
 
   var HeaderView = Backbone.View.extend({
 
@@ -21,7 +22,9 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
+      this.productsCollection = new ProductsCollection();
       this.setListeners();
+
     },
 
     setListeners: function() {
@@ -30,6 +33,7 @@ define([
       Backbone.Events.on('Router:embedMap', this.setTitle, this);
       Backbone.Events.on('Router:rank', this.setTitle, this);
       Backbone.Events.on('setCurrent', this.setCurrent, this);
+      //Backbone.Events.on('Product:is-mappable', this._isMappable, this);
     },
 
     _getEmbedMap: function(e) {
@@ -50,9 +54,17 @@ define([
       }
 
       _.each($('a'), _.bind(function(l) {
+
+        if ($(l).data('location') === 'map' && this.isMappable === 'FALSE') {
+          $(l).addClass('is-disabled');
+          $(l).css('pointer-events', 'none');
+          this.isMappable = null;
+        }
+
         if ($(l).data('location') === this.current) {
           $(l).addClass('is-current');
         }
+
       }, this));
     },
 
@@ -111,10 +123,15 @@ define([
 
     setTitle: function(params) {
       this.currentParams = params;
+      var self = this;
 
       $.get(this.getUrl(), _.bind(function(data) {
         this.currentTitle = data.rows[0].title;
-        this.render();
+        this.productsCollection._isMappable(this.currentParams[0], function(){
+          var json = self.productsCollection.toJSON();
+          self.isMappable = json[0].map;
+          self.render();
+        });
       }, this));
     },
 
