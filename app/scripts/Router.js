@@ -29,7 +29,6 @@ define([
     },
 
     initialize: function() {
-      console.log('initialized');
       this.setListeners();
     },
 
