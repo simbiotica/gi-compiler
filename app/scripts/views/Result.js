@@ -2,9 +2,10 @@ define([
   'underscore',
   'backbone',
   'handlebars',
+  'collections/Products',
   'collections/Answers',
   'text!templates/result.handlebars'
-], function(_, Backbone, Handlebars, AnswersCollection, tpl) {
+], function(_, Backbone, Handlebars, ProductsCollection, AnswersCollection, tpl) {
 
   'use strict';
 
@@ -16,6 +17,7 @@ define([
 
     initialize: function() {
       this.answersCollection = new AnswersCollection();
+      this.productsCollection = new ProductsCollection();
       this.setListeners();
     },
 
@@ -26,22 +28,52 @@ define([
     },
 
     render: function() {
+      var product_map = this.productsCollection.toJSON(),
+        map = false,
+        self = this;
+
+      if (product_map[0].map === 'TRUE') {
+        map = true;
+      }
+      
+      _.each(this.answersCollection.toJSON(), function(answer) {
+        _.each(answer.questions, function(data){
+          _.extend(data, {
+            map: map,
+            table: self.currentTable
+          });  
+        });
+      });
+
       this.$el.html(this.template({
         items: this.answersCollection.toJSON(),
-        table: this.currentTable
       }));
 
       this.toggleCriteria();
     },
 
+    _isMappable: function (formdata) {
+      var deferred = new $.Deferred();
+      var table = formdata.table;
+
+      this.productsCollection._isMappable(table, function(){
+        deferred.resolve();
+      });
+
+      return deferred.resolve();
+    },
+
     empty: function() {
       this.$el.html('');
+
     },
 
     showData: function(formdata) {
       this.empty();
 
+
       $.when(
+        this._isMappable(formdata),
         this.getAnswers(formdata)
       ).then(_.bind(function() {
         this.render();

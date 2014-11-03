@@ -11,7 +11,7 @@ define([
   var ClientView = Backbone.View.extend({
 
     el: '#clientPage',
-
+    
     template: Handlebars.compile(tpl),
 
     collection: new ProductsCollection(),
