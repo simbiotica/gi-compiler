@@ -17,7 +17,9 @@
               <div class="grid-12">
                 <h2>{{text}}</h2>
                 <div class="mod-results-buttons">
-                  <a href="#map/{{../../table}}/{{id}}">Map</a>
+                  {{#if map}}
+                    <a href="#map/{{table}}/{{id}}">Map</a>
+                  {{/if}}
                   {{!-- <a href="#rank/{{../../table}}/{{id}}">Rank</a> --}}
                 </div>
               </div>
