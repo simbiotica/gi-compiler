@@ -75,7 +75,7 @@ define([
     },
 
     setupSelects: function() {
-      var $checkbox = $('input[type=\'checkbox\'');
+      var $checkbox = $('input[type=\'checkbox\']');
 
       $('select[name=\'targets\']').selectize(this.options.selectize);
 
@@ -85,9 +85,9 @@ define([
 
         var $question = $('select[name=\'questions\']').selectize(this.options.questions);
 
-        $('.grid-8').removeClass('grid-8').addClass('grid-12');
-        $('.grid-4').next().find('.selectize-control').css('width', '100%');
-        $('.grid-4').addClass('is-hidden');
+        //$('.grid-8').removeClass('grid-8').addClass('grid-12');
+        //$('.grid-4').next().find('.selectize-control').css('width', '100%');
+        $('.grid-4').first().addClass('is-hidden');
         $('.grid-2').addClass('is-hidden');
 
         $checkbox.parent().css('display', 'none');
@@ -141,7 +141,7 @@ define([
         $('.mod-toolbar').css('visibility', 'hidden');
         $('.mod-toolbar').css('display', 'block');
 
-        $('.mod-toolbar').height('134');
+        $('.mod-toolbar').height('100');
 
         $('.mod-toolbar').removeClass('is-hidden');
 

@@ -63,7 +63,7 @@ define([
 
     createMap: function() {
       this.map = L.map(this.options.mapId, this.options.map);
-      L.tileLayer(this.options.tileUrl).addTo(this.map);
+      this.tileLayer = L.tileLayer(this.options.tileUrl).addTo(this.map);
     },
 
     setTitle: function() {
@@ -114,7 +114,6 @@ define([
           this.getCartoCSS()
         )
         .then(_.bind(function(title, styles) {
-
           if (!this.map) {
             this.createMap();
           }
@@ -168,6 +167,8 @@ define([
 
         if (data.rows[0].criteria === '') {
 
+
+
           legend = new cdb.geo.ui.Legend({
             type: 'custom',
             data: [
@@ -202,7 +203,6 @@ define([
             color: this.options.colorsPath[i]
           });
         }, this);
-
         return deferred.resolve(_.str.sprintf(CARTOCSS, {
           table: this.currentParams[0],
           colors: colorsArr.join(' ')
@@ -218,7 +218,7 @@ define([
     },
 
     getLegendQuery: function() {
-      return _.str.sprintf('SELECT export_generic_prod_%(table)s_meta.choice, export_generic_prod_%(table)s_meta.score, export_generic_prod_%(table)s_meta.criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\'', {
+      return _.str.sprintf('SELECT export_generic_prod_%(table)s_meta.choice, export_generic_prod_%(table)s_meta.score, export_generic_prod_%(table)s_meta.criteria FROM export_generic_prod_%(table)s_meta WHERE aspectid=\'%(question)s\' ORDER BY score DESC', {
         table: this.currentParams[0],
         question: this.currentParams[1]
       });
