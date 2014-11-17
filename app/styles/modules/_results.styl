@@ -8,6 +8,7 @@
     font-weight bold
 
 .mod-results-questions
+  position relative
   background-color $color-3
   padding 10px 0
 
@@ -15,6 +16,13 @@
   background-position: bottom, top;
   background-size: 10px 2px;
   background-repeat: repeat-x;
+
+  text-indent -2.6%
+  padding-left 93px
+
+  h2
+    display inline-block
+    width 80%
 
   article:first-of-type &
     background-position: bottom;
@@ -25,6 +33,9 @@
 
   h3
     padding-top 10px
+
+  p
+    margin 5px 0
 
   .value
     position absolute
@@ -56,7 +67,11 @@
     text-transform uppercase
 
 .mod-results-buttons
-  margin-bottom 20px
+  display inline
+  position absolute
+  top 19px
+  right 36px
+  text-indent 0
   a
     font-size 14px
     color $color-2
@@ -65,7 +80,7 @@
     padding-left 30px
 
     &:hover
-      text-decoration underline
+      color $red
 
     &:first-child:before
       content ''

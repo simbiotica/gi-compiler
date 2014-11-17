@@ -1,8 +1,10 @@
 .mod-toolbar
-  padding 20px 0
   transition: height .3s
+  -moz-transition: height .3s
   -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
+  font-size 16px
 
   .grid-2
     float right
@@ -24,12 +26,15 @@
   .selectize-control
     width calc(100% - 24px)
 
+  .checkbox, .is-btn {
+    margin-top 20px
+  }
+
   .checkbox
     display inline-flex
     padding 0 20px
     width auto
-    height 48px
-    font-size $site-font-size + 5
+    height 35px
     border 1px solid $color-4
     align-items center
 
@@ -65,22 +70,18 @@
   box-shadow none
 
 .selectize-input:-webkit-input-placeholder
-    font-size 21px
     font-family $site-font-family
     color #323232
 
 .selectize-input:-moz-placeholder
-   font-size 21px
    font-family $site-font-family
    color #323232
 
 .selectize-input::-moz-placeholder
-   font-size 21px
    font-family $site-font-family
    color #323232
 
 .selectize-input:-ms-input-placeholder
-   font-size 21px
    font-family $site-font-family
    color #323232
 
