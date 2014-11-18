@@ -102,6 +102,7 @@ define([
         $('.grid-4').removeClass('is-hidden');
         $('.grid-8').find('.form-row').children().css('width', '100%');
         $checkbox.removeAttr('disabled');
+        this.$el.css('overflow', 'visible');
 
         if (this.options.questions.maxItems) {
           delete this.options.questions.maxItems;
@@ -136,7 +137,10 @@ define([
 
       if ($('.mod-toolbar').hasClass('is-hidden')) {
 
+        var self = this;
+
         $('.mod-toolbar').height('0');
+        this.$el.css('overflow', 'hidden');
 
         $('.mod-toolbar').css('visibility', 'hidden');
         $('.mod-toolbar').css('display', 'block');
@@ -145,11 +149,15 @@ define([
 
         $('.mod-toolbar').removeClass('is-hidden');
 
+
         window.setTimeout(function(){
           $('.mod-toolbar').css('visibility', 'visible');
+          self.$el.css('overflow', 'visible');
         }, 300);
 
       } else {
+
+        this.$el.css('overflow', 'hidden');
 
         $('.mod-toolbar').height('0');
 
