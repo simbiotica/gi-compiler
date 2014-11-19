@@ -159,6 +159,7 @@ define([
       $.get(this.getLegendUrl(), _.bind(function(data) {
 
         dataArr = _.map(data.rows, function(d, i) {
+
           return {
             name: d.choice +': '+ d.criteria,
             value: this.options.colorsPath[i]
@@ -166,8 +167,6 @@ define([
         }, this);
 
         if (data.rows[0].criteria === '') {
-
-
 
           legend = new cdb.geo.ui.Legend({
             type: 'custom',
