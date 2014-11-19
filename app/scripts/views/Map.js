@@ -118,6 +118,9 @@ define([
             this.createMap();
           }
 
+          console.log(styles);
+          console.log(query);
+
           if (this.layer) {
             this.layer.setSQL(query);
             this.layer.setCartoCSS(styles);
@@ -196,10 +199,11 @@ define([
       var colorsArr = [];
 
       $.get(this.getLegendUrl(), _.bind(function(data) {
+        console.log(data);
         colorsArr = _.map(data.rows, function(d, i) {
-          return _.str.sprintf('#export_generic_prod_%(table)s_meta[answer=\'%(criteria)s\'] {polygon-fill: %(color)s;}', {
+          return _.str.sprintf('#export_generic_prod_%(table)s_meta[choice=\'%(choice)s\'] {polygon-fill: %(color)s;}', {
             table: this.currentParams[0],
-            criteria: (d.criteria === '') ? d.answerscore : d.criteria,
+            choice: d.choice,
             color: this.options.colorsPath[i]
           });
         }, this);
