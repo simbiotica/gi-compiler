@@ -7,7 +7,7 @@ SELECT countries.cartodb_id,
        export_generic_prod_%(table)s_dp.answerscore::float,
        export_generic_prod_%(table)s_dp.aspecttext,
        export_generic_prod_%(table)s_dp.answervalue AS value,
-       export_generic_prod_%(table)s_meta.criteria AS answer
+       export_generic_prod_%(table)s_meta.choice
 
 FROM countries
 
