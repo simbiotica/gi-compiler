@@ -5,16 +5,16 @@ cartocss/styles.carto.css
 
 main.js
 ----------------
-/Users/davidsingal/Projects/gi-compiler/node_modules/grunt-requirejs/node_modules/almond/almond.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/jquery/dist/jquery.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/underscore/underscore.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/backbone/backbone.js
+/Users/andresglz/Sites/gi-compiler/node_modules/grunt-requirejs/node_modules/almond/almond.js
+/Users/andresglz/Sites/gi-compiler/bower_components/jquery/dist/jquery.js
+/Users/andresglz/Sites/gi-compiler/bower_components/underscore/underscore.js
+/Users/andresglz/Sites/gi-compiler/bower_components/backbone/backbone.js
 Router.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/spinjs/spin.js
+/Users/andresglz/Sites/gi-compiler/bower_components/spinjs/spin.js
 views/Spin.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/underscore.string/lib/underscore.string.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/handlebars/handlebars.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/requirejs-text/text.js
+/Users/andresglz/Sites/gi-compiler/bower_components/underscore.string/lib/underscore.string.js
+/Users/andresglz/Sites/gi-compiler/bower_components/handlebars/handlebars.js
+/Users/andresglz/Sites/gi-compiler/bower_components/requirejs-text/text.js
 text!queries/client.pgsql
 text!queries/product_mappable.pgsql
 collections/Products.js
@@ -24,7 +24,7 @@ text!cartocss/styles.carto.css
 text!queries/map.pgsql
 text!templates/infowindow.handlebars
 views/Map.js
-/Users/davidsingal/Projects/gi-compiler/bower_components/selectize/dist/js/standalone/selectize.js
+/Users/andresglz/Sites/gi-compiler/bower_components/selectize/dist/js/standalone/selectize.js
 text!queries/targets.pgsql
 collections/Targets.js
 text!queries/questions.pgsql
