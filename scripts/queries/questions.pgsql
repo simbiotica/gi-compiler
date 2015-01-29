@@ -16,8 +16,8 @@ as depth
 FROM export_generic_prod_%(table)s_dp
 JOIN export_generic_prod_%(table)s_meta
 on export_generic_prod_%(table)s_dp.aspectid=export_generic_prod_%(table)s_meta.aspectid
-WHERE answervalue is not null
-AND answervalue <>''
+WHERE answervalue::text is not null
+AND answervalue::text <>''
 ORDER BY
 
 CASE
