@@ -37,14 +37,16 @@
     margin 5px 0
     word-wrap break-word
 
-  .value
-
-    padding 5px 12px;
+  .value-container
+    display inline-block
+    padding 5px 12px
+    border-radius 20px
     background-color $color-1
-    border-radius 30px
-    color $color-5
-    text-align center
-    text-transform uppercase
+    .value
+      color $color-5
+      line-height 1.5
+      text-align center
+      text-transform uppercase
 
 .mod-results-criterias
   margin 30px 0
