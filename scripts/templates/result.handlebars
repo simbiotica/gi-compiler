@@ -36,7 +36,9 @@
               </ul>
               {{#each answers}}
                 <div class="mod-results-answers" data-id="{{id}}">
-                  <span class="value">{{value}}</span>
+                  <div class="value-container">
+                    <span class="value">{{value}}</span>
+                  </div>
                   <h3>{{target}}</h3>
                   <p><strong>Score</strong>: {{score}}</p>
                   {{#if sources}}
