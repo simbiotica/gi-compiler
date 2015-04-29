@@ -8,7 +8,7 @@ criterias.criterias,
 father,
 fatherdescription,
 answerscore,
-answervalue,
+answervalue::text,
 level,
 answersourcedescription,
 answercomments,
@@ -42,8 +42,8 @@ FROM export_generic_prod_%(table)s_meta b GROUP BY father, b.aspectid) fathers
 
 where dnorm.aspectid = criterias.aspectid
 AND dnorm.aspectid=fathers.aspectid
-AND answervalue is not null
-AND answervalue <>''
+AND answervalue::text is not null
+AND answervalue::text <>''
 
 %(targets)s
 %(questions)s
