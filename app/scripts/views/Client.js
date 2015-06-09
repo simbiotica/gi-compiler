@@ -11,7 +11,7 @@ define([
   var ClientView = Backbone.View.extend({
 
     el: '#clientPage',
-    
+
     template: Handlebars.compile(tpl),
 
     collection: new ProductsCollection(),
@@ -37,8 +37,11 @@ define([
       $('.layout-header').addClass('is-hidden');
 
       this.$el.html(this.template({
-        client: this.collection.at(0) ? this.collection.at(0).toJSON().client : null,
-        products: this.collection.toJSON()
+        client: this.collection.at(0) ?
+          this.collection.at(0).toJSON().client : null,
+        logo_url: this.collection.at(0) && this.collection.at(0).toJSON().logo_url ?
+          this.collection.at(0).toJSON().logo_url : null,
+        products: this.collection.toJSON(),
       }));
     }
 
