@@ -1,19 +1,26 @@
 <div class="wrap mod-client">
   <div class="row">
     <div class="grid-12">
-    {{#if client}}
-      <h1>Welcome, {{client}}</h1>
-      {{#if products}}
-        {{!-- <p>Your products:</p> --}}
-        <ul>
-          {{#each products}}
-            <li><a href="#questions/{{product_id}}" data-map="{{map}}">{{product_name}}</a></li>
-          {{/each}}
-        </ul>
+      {{#if client}}
+        <header>
+          <h1>Welcome, {{client}}</h1>
+          {{#if logo_url}}
+            <img class="logo" src="{{logo_url}}" alt="logo">
+          {{/if}}
+        </header>
+
+        {{#if products}}
+          <div id="content">
+            <ul>
+              {{#each products}}
+                <li><a href="#questions/{{product_id}}" data-map="{{map}}">{{product_name}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+      {{else}}
+        <p>Client not found</p>
       {{/if}}
-    {{else}}
-      <p>Client not found</p>
-    {{/if}}
     </div>
   </div>
 </div>
