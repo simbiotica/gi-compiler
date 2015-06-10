@@ -45,7 +45,8 @@ define([
                   value: criteria[1]
                 };
               }
-            }))
+            })),
+            notes: (r.notes) ? r.notes.split('|') : null
           };
         }), 'id');
 
@@ -77,7 +78,7 @@ define([
 
       var query = _.str.sprintf(QUERY, {
         table: params.table,
-        targets: (params.targets && params.targets !== 'all') ?  _.str.sprintf('AND targetid IN (%s)', targets) : '',
+        targets: (params.targets && params.targets !== 'all') ?  _.str.sprintf('AND dnorm.targetid IN (%s)', targets) : '',
         questions: (params.questions && params.questions !== 'all') ? _.str.sprintf('AND criterias.aspectid IN (%s)', questions) : ''
       });
 

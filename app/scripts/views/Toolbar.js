@@ -56,6 +56,7 @@ define([
 
     events: {
       'change #toggleCriteria': 'setCriteria',
+      'change #toggleNotes': 'setNotes',
       'submit form': 'onSubmit'
     },
 
@@ -131,6 +132,7 @@ define([
       this.setupSelects();
 
       this.setCriteria();
+      this.setNotes();
     },
 
     toggle: function() {
@@ -253,6 +255,15 @@ define([
       }
       $criteria.prop('checked', localStorage.getItem('GICompilerCriteria') === 'true');
       Backbone.Events.trigger('criteria:change');
+    },
+
+    setNotes: function(e) {
+      var $notes = $('#toggleNotes');
+      if (e) {
+        localStorage.setItem('GICompilerNotes', $notes.prop('checked'));
+      }
+      $notes.prop('checked', localStorage.getItem('GICompilerNotes') === 'true');
+      Backbone.Events.trigger('notes:change');
     }
 
   });

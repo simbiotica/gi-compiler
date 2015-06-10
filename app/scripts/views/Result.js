@@ -5,7 +5,8 @@ define([
   'collections/Products',
   'collections/Answers',
   'text!templates/result.handlebars'
-], function(_, Backbone, Handlebars, ProductsCollection, AnswersCollection, tpl) {
+], function(_, Backbone, Handlebars, ProductsCollection,
+    AnswersCollection, tpl) {
 
   'use strict';
 
@@ -25,6 +26,7 @@ define([
       Backbone.Events.on('Router:questions', this.empty, this);
       Backbone.Events.on('Toolbar:submit', this.showData, this);
       Backbone.Events.on('criteria:change', this.toggleCriteria, this);
+      Backbone.Events.on('notes:change', this.toggleNotes, this);
     },
 
     render: function() {
@@ -35,13 +37,13 @@ define([
       if (product_map[0].map === 'TRUE') {
         map = true;
       }
-      
+
       _.each(this.answersCollection.toJSON(), function(answer) {
         _.each(answer.questions, function(data){
           _.extend(data, {
             map: map,
             table: self.currentTable
-          });  
+          });
         });
       });
 
@@ -102,6 +104,14 @@ define([
         $('.mod-results-criterias').removeClass('is-hidden');
       } else {
         $('.mod-results-criterias').addClass('is-hidden');
+      }
+    },
+
+    toggleNotes: function() {
+      if (localStorage.getItem('GICompilerNotes') === 'true') {
+        $('.notes').removeClass('is-hidden');
+      } else {
+        $('.notes').addClass('is-hidden');
       }
     }
 
