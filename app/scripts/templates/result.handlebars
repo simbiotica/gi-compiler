@@ -47,6 +47,13 @@
                   {{#if comments}}
                     <p><strong>Comments</strong>: {{comments}}</p>
                   {{/if}}
+                  {{#if notes}}
+                    <p class="notes"><strong>Notes</strong>:
+                    {{#each notes}}
+                      {{this}}
+                    {{/each}}
+                    </p>
+                  {{/if}}
                 </div>
               {{/each}}
             </div>
