@@ -52,6 +52,7 @@ define([
       }));
 
       this.toggleCriteria();
+      this.toggleNotes();
     },
 
     _isMappable: function (formdata) {
