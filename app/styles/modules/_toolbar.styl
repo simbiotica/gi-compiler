@@ -5,65 +5,84 @@
   -moz-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 
-  p
-    margin 0;
+  form
+    //overflow hidden
+    position relative
+    margin 15px 0
 
-  .grid-2
-    margin-left 9px
+    .form-content
+      width 80%
 
-  .offset-8
-    margin 0
+      p
+        margin 0
 
-  .form-row
-    margin 20px 0
+      .grid-2
+        margin-left 9px
 
-  label, .selectize-control
-    display inline-block
-    vertical-align middle
+      .offset-8
+        margin 0
 
-  label
-    width 20px
+      .form-row
+        margin 20px 0 10px
 
-  .selectize-control
-    width calc(100% - 24px)
+      label, .selectize-control
+        display inline-block
+        vertical-align middle
 
-  .checkbox, .is-btn
-    margin-top 20px
+      label
+        width 20px
 
+      .selectize-control
+        width calc(100% - 24px)
 
-  .checkbox
-    display inline-flex
-    padding 0 20px
-    width auto
-    height 35px
-    border 1px solid $color-4
-    align-items center
+      .checkbox
+        display inline-flex
+        padding 0 20px
+        width auto
+        height 35px
+        //border 1px solid $color-4
+        align-items center
 
-    input
-      form-field-reset()
-      position relative
-      width 15px
-      height 15px
-      border 1px solid #989898
-      display inline-block
-      margin-right 10px
+        &:first-child
+          padding-left 0
 
-      &:checked
-        &:after
-          content ''
-          display block
-          position absolute
-          right 0px
-          bottom 0
-          width 7px
-          height 18px
-          border-bottom: 3px solid $color-1;
-          border-right: 3px solid $color-1;
-          -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+        input
+          form-field-reset()
+          position relative
+          width 15px
+          height 15px
+          border 1px solid #989898
+          display inline-block
+          margin-right 10px
 
-  .is-btn
-    margin-left 7px
+          &:checked
+            &:after
+              content ''
+              display block
+              position absolute
+              right 0px
+              bottom 0
+              width 7px
+              height 18px
+              border-bottom: 3px solid $color-1;
+              border-right: 3px solid $color-1;
+              -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+
+    .checkbox-box
+      display flex
+      justify-content space-around
+
+    .submit-box
+      position absolute
+      top 0
+      right 0
+      bottom 0
+      width 20%
+      margin-top 20px;
+      text-align center
+      .is-btn
+        height 100%
 
 .selectize-input
   border 1px solid #989898

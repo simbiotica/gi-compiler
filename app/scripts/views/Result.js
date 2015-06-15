@@ -26,6 +26,8 @@ define([
       Backbone.Events.on('Router:questions', this.empty, this);
       Backbone.Events.on('Toolbar:submit', this.showData, this);
       Backbone.Events.on('criteria:change', this.toggleCriteria, this);
+      Backbone.Events.on('sources:change', this.toggleSources, this);
+      Backbone.Events.on('comments:change', this.toggleComments, this);
       Backbone.Events.on('notes:change', this.toggleNotes, this);
     },
 
@@ -52,6 +54,8 @@ define([
       }));
 
       this.toggleCriteria();
+      this.toggleSources();
+      this.toggleComments();
       this.toggleNotes();
     },
 
@@ -105,6 +109,22 @@ define([
         $('.mod-results-criterias').removeClass('is-hidden');
       } else {
         $('.mod-results-criterias').addClass('is-hidden');
+      }
+    },
+
+    toggleSources: function() {
+      if (localStorage.getItem('GICompilerSources') === 'true') {
+        $('.sources').removeClass('is-hidden');
+      } else {
+        $('.sources').addClass('is-hidden');
+      }
+    },
+
+    toggleComments: function() {
+      if (localStorage.getItem('GICompilerComments') === 'true') {
+        $('.comments').removeClass('is-hidden');
+      } else {
+        $('.comments').addClass('is-hidden');
       }
     },
 
