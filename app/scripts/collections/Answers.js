@@ -32,7 +32,7 @@ define([
             id: r.aspectid,
             text: r.aspecttext,
             value: r.answervalue,
-            score: r.answerscore,
+            score: r.answerscore === 'null' ? null : r.answerscore,
             table: r.datatype.toLowerCase() === 'table' ? true : null,
             target: r.targetname,
             targetId: r.targetid,
