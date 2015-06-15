@@ -4,46 +4,61 @@
   <p>To customize the report, select the desired targets, then questions you wish to review then click Apply to display. Check Criteria if you wish the answer criteria to be listed for each question.</p>
 {{/if}}
 <form>
-  <div class="row">
-    <div class="grid-4">
-      <div class="form-row">
-        {{!-- <label>1.</label> --}}
-        <select name="targets" data-placeholder="Select targets" multiple>
-          <option value="all">All targets</option>
-          {{#each targets}}
-            <option value="{{id}}">{{name}}</option>
-          {{/each}}
-        </select>
-      </div>
-    </div>
-    <div class="grid-2">
-      <div class="form-row">
-        {{!-- <label>2.</label> --}}
-        {{#if map}}
-          <select name="questions" placeholder="Select question" multiple>
-            {{#each questions}}
+
+  <div class="form-content">
+    <div class="row">
+      <div class="grid-6">
+        <div class="form-row">
+          {{!-- <label>1.</label> --}}
+          <select name="targets" data-placeholder="Select targets" multiple>
+            <option value="all">All targets</option>
+            {{#each targets}}
               <option value="{{id}}">{{name}}</option>
             {{/each}}
           </select>
-        {{else}}
-          <select name="questions" placeholder="Select questions" multiple>
-            <option value="all">All questions</option>
-            {{#each questions}}
-              <option value="{{id}}">{{name}}</option>
-            {{/each}}
-          </select>
-        {{/if}}
+        </div>
+      </div>
+      <div class="grid-6">
+        <div class="form-row">
+          {{!-- <label>2.</label> --}}
+          {{#if map}}
+            <select name="questions" placeholder="Select question" multiple>
+              {{#each questions}}
+                <option value="{{id}}">{{name}}</option>
+              {{/each}}
+            </select>
+          {{else}}
+            <select name="questions" placeholder="Select questions" multiple>
+              <option value="all">All questions</option>
+              {{#each questions}}
+                <option value="{{id}}">{{name}}</option>
+              {{/each}}
+            </select>
+          {{/if}}
+        </div>
       </div>
     </div>
-    <div class="grid-2">
-      <label for="criteria" class="checkbox"><input type="checkbox" name="criteria" id="toggleCriteria" value="yes" checked> Criteria</label>
+    <div class="row">
+      <div class="checkbox-box">
+        <div class="grid-2">
+        <label for="criteria" class="checkbox"><input type="checkbox" name="criteria" id="toggleCriteria" value="yes" checked> Criteria</label>
+      </div>
+      <div class="grid-2">
+        <label for="sources" class="checkbox"><input type="checkbox" name="sources" id="toggleSources" value="yes" checked> Sources</label>
+      </div>
+      <div class="grid-2">
+        <label for="comments" class="checkbox"><input type="checkbox" name="comments" id="toggleComments" value="yes" checked> Comments</label>
+      </div>
+      <div class="grid-2">
+        <label for="notes" class="checkbox"><input type="checkbox" name="notes" id="toggleNotes" value="yes" checked> Notes</label>
+      </div>
+      </div>
     </div>
-    <div class="grid-2">
-      <label for="notes" class="checkbox"><input type="checkbox" name="notes" id="toggleNotes" value="yes" checked> Notes</label>
-    </div>
-    <div class="grid-2 offset-8">
+  </div>
+  <div class="submit-box">
+    {{!-- <div class="grid-2"> --}}
       <button class="is-btn" id="applyBtn" type="submit">Apply</button>
-    </div>
+    {{!-- </div> --}}
   </div>
   <input type="hidden" name="table" value="{{table}}">
 </form>

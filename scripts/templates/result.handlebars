@@ -37,15 +37,27 @@
               {{#each answers}}
                 <div class="mod-results-answers" data-id="{{id}}">
                   <h3>{{target}}</h3>
-                  <div class="value-container">
-                    <span class="value">{{value}}</span>
-                  </div>
-                  <p><strong>Score</strong>: {{score}}</p>
+                  {{#if table}}
+                    <div class="table-container">
+                      {{{value}}}
+                    </div>
+                    {{else}}
+                    <div class="value-container">
+                      <span class="value">{{{value}}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if score}}
+                    <p><strong>Score</strong>: {{score}}</p>
+                  {{/if}}
                   {{#if sources}}
-                    <p><strong>Sources</strong>: {{sources}}</p>
+                    <p class="sources">
+                      <strong>Sources</strong>: {{sources}}
+                    </p>
                   {{/if}}
                   {{#if comments}}
-                    <p><strong>Comments</strong>: {{comments}}</p>
+                    <p class="comments">
+                      <strong>Comments</strong>: {{comments}}
+                    </p>
                   {{/if}}
                   {{#if notes}}
                     <p class="notes is-hidden"><strong>Notes</strong>:
