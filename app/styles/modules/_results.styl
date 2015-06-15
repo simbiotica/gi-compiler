@@ -37,16 +37,32 @@
     margin 5px 0
     word-wrap break-word
 
-  .value-container
+  .value-container,
+  .table-container
     display inline-block
-    padding 5px 12px
-    border-radius 20px
     background-color $color-1
+    color $color-5
+    text-align center
+    line-height 1.5
+
+
+  .value-container
+    border-radius 20px
+    padding 5px 12px
     .value
-      color $color-5
-      line-height 1.5
-      text-align center
       text-transform uppercase
+
+  .table-container
+    border-radius 3px
+    table
+      td
+        padding 7px
+      thead
+        td
+          font-weight 700
+      tbody
+        tr:nth-child(2n)
+          background $color-6
 
 .mod-results-criterias
   margin 30px 0
