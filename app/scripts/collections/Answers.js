@@ -33,6 +33,7 @@ define([
             text: r.aspecttext,
             value: r.answervalue,
             score: r.answerscore,
+            table: r.datatype.toLowerCase() === 'table' ? true : null,
             target: r.targetname,
             targetId: r.targetid,
             comments: r.answercomments,

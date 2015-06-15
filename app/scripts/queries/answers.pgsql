@@ -7,6 +7,7 @@ criterias.criterias,
 --reviewanswervalue,
 father,
 fatherdescription,
+fathers.datatype,
 answerscore,
 answervalue::text,
 level,
@@ -45,10 +46,10 @@ dnorm.aspectid = criterias.aspectid
 left join
 
 -- question+father SUB-select
-(SELECT aspectid,
+(SELECT aspectid, datatype,
 (SELECT aspectid as fatherid FROM export_generic_prod_%(table)s_meta a WHERE b.aspectid = ANY(regexp_split_to_array(memberaspects, '[|]')) ) as father,
 (SELECT aspectdescription as fatherdescription FROM export_generic_prod_%(table)s_meta a WHERE b.aspectid = ANY(regexp_split_to_array(memberaspects, '[|]')) ) as fatherdescription
-FROM export_generic_prod_%(table)s_meta b GROUP BY father, b.aspectid) as fathers
+FROM export_generic_prod_%(table)s_meta b GROUP BY father, b.aspectid, b.datatype) as fathers
 on dnorm.aspectid=fathers.aspectid
 
 where answervalue::text is not null
@@ -65,6 +66,7 @@ criterias.criterias,
 --reviewanswervalue,
 father,
 fatherdescription,
+fathers.datatype,
 answerscore,
 answervalue,
 level,
