@@ -36,7 +36,7 @@ define([
         map = false,
         self = this;
 
-      if (product_map[0].map === 'TRUE') {
+      if (product_map[0] && product_map[0].map === 'TRUE') {
         map = true;
       }
 
