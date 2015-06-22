@@ -32,6 +32,7 @@ collections/Questions.js
 text!templates/toolbar.handlebars
 views/Toolbar.js
 text!queries/answers.pgsql
+text!queries/answers_notes.pgsql
 collections/Answers.js
 text!templates/result.handlebars
 views/Result.js
