@@ -2,8 +2,9 @@ define([
   'underscore',
   'underscoreString',
   'backbone',
-  'text!queries/answers.pgsql'
-], function(_, underscoreString, Backbone, QUERY) {
+  'text!queries/answers.pgsql',
+  'text!queries/answers_notes.pgsql'
+], function(_, underscoreString, Backbone, QUERY, QUERY_NOTES) {
 
   'use strict';
 
@@ -69,6 +70,7 @@ define([
     },
 
     getByTargetAndQuestion: function(params, callback) {
+      var query;
       var targets = (typeof params.targets === 'object') ? _.map(params.targets, function(t) {
         return _.str.sprintf('\'%s\'', t);
       }).toString() : _.str.sprintf('\'%s\'', params.targets);
@@ -77,13 +79,23 @@ define([
         return _.str.sprintf('\'%s\'', q);
       }).toString() : _.str.sprintf('\'%s\'', params.questions);
 
-      var query = _.str.sprintf(QUERY, {
-        table: params.table,
-        targets: (params.targets && params.targets !== 'all') ?  _.str.sprintf('AND dnorm.targetid IN (%s)', targets) : '',
-        questions: (params.questions && params.questions !== 'all') ? _.str.sprintf('AND criterias.aspectid IN (%s)', questions) : '',
-        notes_targets: _.str.sprintf('AND n.targetid IN (%s)', targets),
-        notes_questions: _.str.sprintf('AND n.aspectid IN (%s)', questions),
-      });
+      if (params.table === '107') {
+        query = _.str.sprintf(QUERY_NOTES, {
+          table: params.table,
+          targets: (params.targets && params.targets !== 'all') ?  _.str.sprintf('AND dnorm.targetid IN (%s)', targets) : '',
+          questions: (params.questions && params.questions !== 'all') ? _.str.sprintf('AND criterias.aspectid IN (%s)', questions) : '',
+          notes_targets: _.str.sprintf('AND n.targetid IN (%s)', targets),
+          notes_questions: _.str.sprintf('AND n.aspectid IN (%s)', questions),
+        });
+      } else {
+        query = _.str.sprintf(QUERY, {
+          table: params.table,
+          targets: (params.targets && params.targets !== 'all') ?  _.str.sprintf('AND dnorm.targetid IN (%s)', targets) : '',
+          questions: (params.questions && params.questions !== 'all') ? _.str.sprintf('AND criterias.aspectid IN (%s)', questions) : ''
+        });
+      }
+
+
 
       this.fetch({
         data: {

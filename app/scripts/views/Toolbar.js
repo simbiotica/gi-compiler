@@ -116,7 +116,8 @@ define([
     },
 
     render: function() {
-      var map;
+      var map,
+        tableNotes = false;
 
       if (this.location === 'map') {
         map = true;
@@ -124,8 +125,13 @@ define([
 
       this.$el.removeAttr('style');
 
+      if (this.table === '107') {
+        tableNotes = true;
+      }
+
       this.$el.html(this.template({
           table: this.table,
+          tableNotes: tableNotes,
           targets: this.targetsCollection.toJSON(),
           questions: this.questionsCollection.toJSON(),
           map: map

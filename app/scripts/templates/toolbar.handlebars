@@ -49,9 +49,11 @@
       <div class="grid-2">
         <label for="comments" class="checkbox"><input type="checkbox" name="comments" id="toggleComments" value="yes" checked> Comments</label>
       </div>
-      <div class="grid-2">
-        <label for="notes" class="checkbox"><input type="checkbox" name="notes" id="toggleNotes" value="yes" checked> Notes</label>
-      </div>
+      {{#if tableNotes}}
+        <div class="grid-2">
+          <label for="notes" class="checkbox"><input type="checkbox" name="notes" id="toggleNotes" value="yes" checked> Notes</label>
+        </div>
+      {{/if}}
       </div>
     </div>
   </div>

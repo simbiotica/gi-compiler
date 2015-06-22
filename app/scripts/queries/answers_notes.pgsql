@@ -13,6 +13,7 @@ answervalue::text,
 level,
 answersourcedescription,
 answercomments,
+notes.notes,
 criterias.aspectname,
 CASE
 WHEN depth::text~E'^\\d+$'
@@ -38,6 +39,26 @@ GROUP BY aspectid, criterias, aspectname
 ) as criterias
 on
 dnorm.aspectid = criterias.aspectid
+
+left join
+-- notes sub-select
+(select
+  n.aspectid,
+  n.targetid,
+  notedata1 || notedata2 as notes
+from export_generic_prod_%(table)s_notes n,
+ export_generic_prod_%(table)s_dp p
+
+where n.aspectid = p.aspectid
+  and n.targetid = p.targetid
+  %(notes_targets)s
+  %(notes_questions)s
+group by
+  n.notedata1, n.notedata2, n.aspectid, n.targetid
+
+) as notes
+on
+  notes.aspectid = dnorm.aspectid
 
 
 left join
@@ -70,7 +91,8 @@ level,
 depth,
 answersourcedescription,
 answercomments,
-criterias.aspectname
+criterias.aspectname,
+notes
 
 order by
 CASE
