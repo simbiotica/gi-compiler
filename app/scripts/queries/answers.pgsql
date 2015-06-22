@@ -13,8 +13,8 @@ answervalue::text,
 level,
 answersourcedescription,
 answercomments,
+notes.notes,
 criterias.aspectname,
-notedata1 || notedata2 as notes,
 CASE
 WHEN depth::text~E'^\\d+$'
 THEN depth::integer
@@ -23,12 +23,8 @@ END
 as depth
 
 FROM export_generic_prod_%(table)s_dp dnorm
-left join export_generic_prod_%(table)s_notes notes
-on
-  dnorm.aspectid = notes.aspectid
-  and dnorm.targetid = notes.targetid
-left join
 
+left join
 -- question+criterias SUB-select
 (SELECT aspectid, aspectname,
 (SELECT
@@ -43,6 +39,28 @@ GROUP BY aspectid, criterias, aspectname
 ) as criterias
 on
 dnorm.aspectid = criterias.aspectid
+
+left join
+-- notes sub-select
+(select
+  n.aspectid,
+  n.targetid,
+  notedata1 || notedata2 as notes
+from export_generic_prod_%(table)s_notes n,
+ export_generic_prod_%(table)s_dp p
+
+where n.aspectid = p.aspectid
+  and n.targetid = p.targetid
+  %(notes_targets)s
+  %(notes_questions)s
+group by
+  n.notedata1, n.notedata2, n.aspectid, n.targetid
+
+) as notes
+on
+  notes.aspectid = dnorm.aspectid
+
+
 left join
 
 -- question+father SUB-select
