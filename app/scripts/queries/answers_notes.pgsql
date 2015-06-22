@@ -31,6 +31,7 @@ left join
 array(SELECT a.choice ||'|'||a.criteria
       FROM export_generic_prod_%(table)s_meta a
       where a.aspectid = b.aspectid
+      order by choice
       )) as criterias
 FROM export_generic_prod_%(table)s_meta b
 GROUP BY aspectid, criterias, aspectname
