@@ -2,33 +2,39 @@
 
   border 0
 
-  #headerView
-    max-width 685px
+  .logo-container
+    display flex
+    justify-content center
+    margin 30px 0
 
-.mod-nav
-  position absolute
-  right 0
-  top 50%
-  transform: translateY(-50%);
+  .navigation
+    display flex
+    justify-content space-between
+    align-items center
 
-  ul
-    padding 0
-    list-style none
+    h1
+      display inline-block
 
-  li
-    position relative
-    display inline-block
-    margin-left 15px
+    .mod-nav
 
-  a
-    color $color-2
-    text-decoration none
+      ul
+        padding 0
+        list-style none
 
-    &:hover
-      text-decoration underline
+      li
+        position relative
+        display inline-block
+        margin-left 15px
 
-  .is-current
-    border-bottom 5px solid $red
+      a
+        color $color-2
+        text-decoration none
+
+        &:hover
+          text-decoration underline
+
+      .is-current
+        border-bottom 5px solid $red
 
 #printBtn, #embedBtn
   border 0

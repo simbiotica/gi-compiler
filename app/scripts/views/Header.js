@@ -110,6 +110,7 @@ define([
         client: localStorage.getItem('client'),
         map: map,
         title: this.currentTitle,
+        logo_url: this.logo_url,
         table: this.currentParams[0],
         question: this.currentParams[1]
       }));
@@ -127,6 +128,7 @@ define([
 
       $.get(this.getUrl(), _.bind(function(data) {
         this.currentTitle = data.rows[0].title;
+        this.logo_url = data.rows[0].logo_url;
         this.productsCollection._isMappable(this.currentParams[0], function(){
           var json = self.productsCollection.toJSON();
           self.isMappable = json[0].map;
@@ -140,7 +142,9 @@ define([
     },
 
     getQuery: function() {
-      return _.str.sprintf('SELECT projectname AS title FROM export_generic_prod_%(table)s_dp LIMIT 1', {
+      return _.str.sprintf('SELECT projectname as title, logo_url \
+        FROM export_generic_prod_%(table)s_dp, products \
+        where product_id = productid LIMIT 1', {
         table: this.currentParams[0]
       });
     },
