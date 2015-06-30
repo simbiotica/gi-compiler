@@ -48,7 +48,16 @@ define([
                 };
               }
             })),
-            notes: (r.notes) ? r.notes.split('|') : null
+            notes: function() {
+              if (r.notes1 === null && r.notes2 === null) {
+                return;
+              } else {
+                return {
+                  notes1: (r.notes1) ? r.notes1 : null,
+                  notes2: (r.notes2) ? r.notes2 : null
+                }
+              }
+            }
           };
         }), 'id');
 
@@ -65,7 +74,7 @@ define([
           })
         };
       });
-
+      console.log(result);
       return result;
     },
 

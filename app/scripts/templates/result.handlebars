@@ -60,10 +60,11 @@
                     </p>
                   {{/if}}
                   {{#if notes}}
-                    <p class="notes is-hidden"><strong>Notes</strong>:
-                    {{#each notes}}
-                      {{this}}
-                    {{/each}}
+                    <p class="notes is-hidden"><strong>Notes:</strong>
+                      {{#each notes}}
+                        <br><span class="note-title">{{this.[0]}}:</span>
+                        <span>{{this.[1]}}</span>
+                      {{/each}}
                     </p>
                   {{/if}}
                 </div>
