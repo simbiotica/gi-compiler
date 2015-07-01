@@ -34,6 +34,10 @@ views/Toolbar.js
 text!queries/answers.pgsql
 text!queries/answers_notes.pgsql
 collections/Answers.js
+text!queries/reviews.pgsql
+collections/Reviews.js
+text!queries/notes.pgsql
+collections/Notes.js
 text!templates/result.handlebars
 views/Result.js
 text!templates/rank.handlebars
