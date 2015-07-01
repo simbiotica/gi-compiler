@@ -27,7 +27,6 @@ define([
 
     parse: function(data) {
       var result = _.map(_.groupBy(data.rows, 'father'), function(group) {
-
         var questions = _.groupBy(_.map(group, function(r) {
           return {
             id: r.aspectid,
@@ -47,8 +46,7 @@ define([
                   value: criteria[1]
                 };
               }
-            })),
-            notes: (r.notes) ? r.notes.split('|') : null
+            }))
           };
         }), 'id');
 
@@ -65,7 +63,6 @@ define([
           })
         };
       });
-
       return result;
     },
 

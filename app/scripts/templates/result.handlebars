@@ -60,11 +60,42 @@
                     </p>
                   {{/if}}
                   {{#if notes}}
-                    <p class="notes is-hidden"><strong>Notes</strong>:
-                    {{#each notes}}
-                      {{this}}
-                    {{/each}}
-                    </p>
+                    <div class="notes">
+                      <strong>Notes:</strong>
+                      <ul class="notes-list">
+                        {{#each notes}}
+                          <li>
+                            {{#if notetitle1}}
+                              <h4>{{notetitle1}}</h4>
+                              <p>{{notedata1}}</p>
+                            {{/if}}
+                            {{#if notetitle2}}
+                              <h4>{{notetitle2}}</h4>
+                              <p>{{notedata2}}</p>
+                            {{/if}}
+                          </li>
+                        {{/each}}
+                      </ul>
+                    </div>
+                  {{/if}}
+                  {{#if reviews}}
+                  <div class="reviews">
+                    <strong>Reviews:</strong>
+                    <ul class="reviews-list">
+                      {{#each reviews}}
+                        <li>
+                          <h4>{{reviewuserrole}}</h4>
+                          <p>{{reviewopinion}}</p>
+                          {{#if reviewanswervalue}}
+                            <p>{{reviewanswervalue}}</p>
+                          {{/if}}
+                          {{#if reviewcomments}}
+                            <p>{{reviewcomments}}</p>
+                          {{/if}}
+                        </li>
+                      {{/each}}
+                    </ul>
+                  </div>
                   {{/if}}
                 </div>
               {{/each}}

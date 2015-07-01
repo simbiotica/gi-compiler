@@ -1,0 +1,13 @@
+SELECT
+  aspectid,
+  targetid,
+  reviewuserrole,
+  reviewopinion,
+  reviewanswervalue,
+  reviewcomments
+from
+  export_generic_prod_107_dp
+where
+  %(question)s
+  %(target)s
+  %(opinion)s
