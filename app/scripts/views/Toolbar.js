@@ -59,6 +59,7 @@ define([
       'change #toggleSources': 'setSources',
       'change #toggleComments': 'setComments',
       'change #toggleNotes': 'setNotes',
+      'change #toggleReviews': 'setReviews',
       'submit form': 'onSubmit'
     },
 
@@ -143,6 +144,7 @@ define([
       this.setSources();
       this.setComments();
       this.setNotes();
+      this.setReviews();
     },
 
     toggle: function() {
@@ -292,6 +294,15 @@ define([
       }
       $notes.prop('checked', localStorage.getItem('GICompilerNotes') === 'true');
       Backbone.Events.trigger('notes:change');
+    },
+
+    setReviews: function(e) {
+      var $reviews = $('#toggleReviews');
+      if (e) {
+        localStorage.setItem('GICompilerReviews', $reviews.prop('checked'));
+      }
+      $reviews.prop('checked', localStorage.getItem('GICompilerReviews') === 'true');
+      Backbone.Events.trigger('reviews:change');
     }
 
   });

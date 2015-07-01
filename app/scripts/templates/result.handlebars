@@ -67,6 +67,25 @@
                       {{/each}}
                     </p>
                   {{/if}}
+                  {{#if reviews}}
+                  <div class="reviews">
+                    <strong>Reviews:</strong>
+                    <ul class="reviews-list">
+                      {{#each reviews}}
+                        <li>
+                          <h4>{{reviewuserrole}}</h4>
+                          <p>{{reviewopinion}}</p>
+                          {{#if reviewanswervalue}}
+                            <p>{{reviewanswervalue}}</p>
+                          {{/if}}
+                          {{#if reviewcomments}}
+                            <p>{{reviewcomments}}</p>
+                          {{/if}}
+                        </li>
+                      {{/each}}
+                    </ul>
+                  </div>
+                  {{/if}}
                 </div>
               {{/each}}
             </div>

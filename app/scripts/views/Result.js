@@ -4,9 +4,10 @@ define([
   'handlebars',
   'collections/Products',
   'collections/Answers',
+  'collections/Reviews',
   'text!templates/result.handlebars'
 ], function(_, Backbone, Handlebars, ProductsCollection,
-    AnswersCollection, tpl) {
+    AnswersCollection, ReviewCollection, tpl) {
 
   'use strict';
 
@@ -19,6 +20,7 @@ define([
     initialize: function() {
       this.answersCollection = new AnswersCollection();
       this.productsCollection = new ProductsCollection();
+      this.reviewsCollection = new ReviewCollection();
       this.setListeners();
     },
 
@@ -29,6 +31,7 @@ define([
       Backbone.Events.on('sources:change', this.toggleSources, this);
       Backbone.Events.on('comments:change', this.toggleComments, this);
       Backbone.Events.on('notes:change', this.toggleNotes, this);
+      Backbone.Events.on('reviews:change', this.toggleReviews, this);
     },
 
     render: function() {
@@ -40,11 +43,21 @@ define([
         map = true;
       }
 
+      var reviews = this.reviewsCollection.toJSON();
+
       _.each(this.answersCollection.toJSON(), function(answer) {
         _.each(answer.questions, function(data){
           _.extend(data, {
             map: map,
             table: self.currentTable
+          });
+          _.each(data.answers, function(m) {
+            _.extend(m, {
+              reviews: _.where(reviews, {
+                aspectid: m.id,
+                targetid: m.targetId
+              })
+            });
           });
         });
       });
@@ -57,6 +70,34 @@ define([
       this.toggleSources();
       this.toggleComments();
       this.toggleNotes();
+      this.toggleReviews();
+    },
+
+    getReviews: function(formdata) {
+      var deferred = new $.Deferred();
+      var question = formdata.questions;
+      var target = formdata.targets;
+
+      var result = '';
+
+
+      if (typeof(question) === 'string') {
+        result = '\'' + question + '\'';
+      } else {
+        _.map(question, function(q) {
+          result += _.str.sprintf('\'%s\'', q) + ',';
+        });
+
+        result = result.slice(0, result.length -1);
+      }
+
+
+
+      this.reviewsCollection.getReviews(result, target, function(){
+        deferred.resolve();
+      });
+
+      return deferred.promise();
     },
 
     _isMappable: function (formdata) {
@@ -67,7 +108,7 @@ define([
         deferred.resolve();
       });
 
-      return deferred.resolve();
+      return deferred.promise();
     },
 
     empty: function() {
@@ -81,7 +122,8 @@ define([
 
       $.when(
         this._isMappable(formdata),
-        this.getAnswers(formdata)
+        this.getAnswers(formdata),
+        this.getReviews(formdata)
       ).then(_.bind(function() {
         this.render();
       }, this));
@@ -133,6 +175,14 @@ define([
         $('.notes').removeClass('is-hidden');
       } else {
         $('.notes').addClass('is-hidden');
+      }
+    },
+
+    toggleReviews: function() {
+      if (localStorage.getItem('GICompilerReviews') === 'true') {
+        $('.reviews').removeClass('is-hidden');
+      } else {
+        $('.reviews').addClass('is-hidden');
       }
     }
 

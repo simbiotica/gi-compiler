@@ -27,7 +27,6 @@ define([
 
     parse: function(data) {
       var result = _.map(_.groupBy(data.rows, 'father'), function(group) {
-
         var questions = _.groupBy(_.map(group, function(r) {
           return {
             id: r.aspectid,
@@ -55,7 +54,7 @@ define([
                 return {
                   notes1: (r.notes1) ? r.notes1 : null,
                   notes2: (r.notes2) ? r.notes2 : null
-                }
+                };
               }
             }
           };
@@ -74,7 +73,6 @@ define([
           })
         };
       });
-      console.log(result);
       return result;
     },
 
