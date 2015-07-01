@@ -8,6 +8,6 @@ SELECT
 from
   export_generic_prod_107_dp
 where
-  aspectid in (%(question)s)
-  and targetid in (%(target)s)
-  and reviewopinion != 1
+  %(question)s
+  %(target)s
+  %(opinion)s

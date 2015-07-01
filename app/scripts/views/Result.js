@@ -5,9 +5,10 @@ define([
   'collections/Products',
   'collections/Answers',
   'collections/Reviews',
+  'collections/Notes',
   'text!templates/result.handlebars'
 ], function(_, Backbone, Handlebars, ProductsCollection,
-    AnswersCollection, ReviewCollection, tpl) {
+    AnswersCollection, ReviewCollection, NotesCollection, tpl) {
 
   'use strict';
 
@@ -21,6 +22,7 @@ define([
       this.answersCollection = new AnswersCollection();
       this.productsCollection = new ProductsCollection();
       this.reviewsCollection = new ReviewCollection();
+      this.notesCollection = new NotesCollection(),
       this.setListeners();
     },
 
@@ -44,6 +46,7 @@ define([
       }
 
       var reviews = this.reviewsCollection.toJSON();
+      var notes = this.notesCollection.toJSON();
 
       _.each(this.answersCollection.toJSON(), function(answer) {
         _.each(answer.questions, function(data){
@@ -54,6 +57,10 @@ define([
           _.each(data.answers, function(m) {
             _.extend(m, {
               reviews: _.where(reviews, {
+                aspectid: m.id,
+                targetid: m.targetId
+              }),
+              notes: _.where(notes, {
                 aspectid: m.id,
                 targetid: m.targetId
               })
@@ -73,27 +80,79 @@ define([
       this.toggleReviews();
     },
 
+    getNotes: function(formdata) {
+      var deferred = new $.Deferred();
+      var question = formdata.questions;
+      var target = formdata.targets;
+
+      var result = '',
+        query_question = '',
+        query_target = '';
+
+
+      if (question) {
+        if (typeof(question) === 'string') {
+          result = '\'' + question + '\'';
+        } else {
+          _.map(question, function(q) {
+            result += _.str.sprintf('\'%s\'', q) + ',';
+          });
+
+          result = result.slice(0, result.length -1);
+        }
+
+        query_question = _.str.sprintf('aspectid in (%s)', result);
+      }
+
+      if (target) {
+        if (query_question) {
+          query_target = _.str.sprintf('and targetid in (%s)', target);
+        } else {
+          query_target = _.str.sprintf('targetid in (%s)', target);
+        }
+      }
+
+
+
+      this.notesCollection.getNotes(query_question, query_target, function() {
+        deferred.resolve();
+      });
+
+      return deferred.promise();
+    },
+
     getReviews: function(formdata) {
       var deferred = new $.Deferred();
       var question = formdata.questions;
       var target = formdata.targets;
 
-      var result = '';
+      var result = '',
+        query_question = '',
+        query_target = '';
 
+      if (question) {
+        if (typeof(question) === 'string') {
+          result = '\'' + question + '\'';
+        } else {
+          _.map(question, function(q) {
+            result += _.str.sprintf('\'%s\'', q) + ',';
+          });
 
-      if (typeof(question) === 'string') {
-        result = '\'' + question + '\'';
-      } else {
-        _.map(question, function(q) {
-          result += _.str.sprintf('\'%s\'', q) + ',';
-        });
+          result = result.slice(0, result.length -1);
+        }
 
-        result = result.slice(0, result.length -1);
+        query_question = _.str.sprintf('aspectid in (%s)', result);
       }
 
+      if (target) {
+        if (query_question) {
+          query_target = _.str.sprintf('and targetid in (%s)', target);
+        } else {
+          query_target = _.str.sprintf('targetid in (%s)', target);
+        }
+      }
 
-
-      this.reviewsCollection.getReviews(result, target, function(){
+      this.reviewsCollection.getReviews(query_question, query_target, function(){
         deferred.resolve();
       });
 
@@ -119,11 +178,11 @@ define([
     showData: function(formdata) {
       this.empty();
 
-
       $.when(
         this._isMappable(formdata),
         this.getAnswers(formdata),
-        this.getReviews(formdata)
+        this.getReviews(formdata),
+        this.getNotes(formdata)
       ).then(_.bind(function() {
         this.render();
       }, this));

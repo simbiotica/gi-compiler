@@ -60,12 +60,23 @@
                     </p>
                   {{/if}}
                   {{#if notes}}
-                    <p class="notes is-hidden"><strong>Notes:</strong>
-                      {{#each notes}}
-                        <br><span class="note-title">{{this.[0]}}:</span>
-                        <span>{{this.[1]}}</span>
-                      {{/each}}
-                    </p>
+                    <div class="notes">
+                      <strong>Notes:</strong>
+                      <ul class="notes-list">
+                        {{#each notes}}
+                          <li>
+                            {{#if notetitle1}}
+                              <h4>{{notetitle1}}</h4>
+                              <p>{{notedata1}}</p>
+                            {{/if}}
+                            {{#if notetitle2}}
+                              <h4>{{notetitle2}}</h4>
+                              <p>{{notedata2}}</p>
+                            {{/if}}
+                          </li>
+                        {{/each}}
+                      </ul>
+                    </div>
                   {{/if}}
                   {{#if reviews}}
                   <div class="reviews">

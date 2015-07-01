@@ -44,12 +44,19 @@ define([
     },
 
     getReviews: function(question, target, callback) {
+      var opinion;
+      if (question || target) {
+        opinion = 'and reviewopinion != 1';
+      } else {
+        opinion = 'reviewopinion != 1';
+      }
 
       var opts = {
         data: {
           q: _.str.sprintf(QUERY, {
             question: question,
-            target: target
+            target: target,
+            opinion: opinion
           })
         },
         success: callback,
