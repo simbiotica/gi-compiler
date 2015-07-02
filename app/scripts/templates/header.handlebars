@@ -1,6 +1,8 @@
-<div class="logo-container">
-  <img src="{{logo_url}}" alt="logo">
-</div>
+{{#if logo_url}}
+  <div class="logo-container">
+    <img src="{{logo_url}}" alt="logo">
+  </div>
+{{/if}}
 <div class="navigation">
   <h1 id="headerTitle">{{title}}</h1>
   <nav class="mod-nav is-unprintable">
