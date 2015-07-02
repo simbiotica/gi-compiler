@@ -146,7 +146,7 @@ define([
     getQuery: function() {
       return _.str.sprintf('SELECT projectname as title, logo_url \
         FROM export_generic_prod_%(table)s_dp, products \
-        where product_id = productid LIMIT 1', {
+        where product_id::integer = productid::integer LIMIT 1', {
         table: this.currentParams[0]
       });
     },
