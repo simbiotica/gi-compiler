@@ -78,6 +78,18 @@ define([
       this.toggleComments();
       this.toggleNotes();
       this.toggleReviews();
+
+      this.formatTextAreas();
+    },
+
+    formatTextAreas: function() {
+      _.each($('textarea'), function(txt) {
+        var parent = $(txt).parent();
+        var content = $(txt).html();
+        var elem = document.createElement('p');
+        $(elem).html(content);
+        $(parent).html(elem);
+      });
     },
 
     getNotes: function(formdata) {
