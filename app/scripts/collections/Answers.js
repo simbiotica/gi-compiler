@@ -39,12 +39,14 @@ define([
             comments: r.answercomments,
             sources: r.answersourcedescription,
             criterias: _.compact(_.map(r.criterias, function(c) {
-              var criteria = c.split('|');
-              if (criteria[0] !== '' && criteria[1] !== '') {
-                return {
-                  key: criteria[0],
-                  value: criteria[1]
-                };
+              if (c) {
+                var criteria = c.split('|');
+                if (criteria[0] !== '' && criteria[1] !== '') {
+                  return {
+                    key: criteria[0],
+                    value: criteria[1]
+                  };
+                }
               }
             }))
           };

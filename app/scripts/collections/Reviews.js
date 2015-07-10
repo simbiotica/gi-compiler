@@ -51,6 +51,8 @@ define([
         opinion = 'reviewopinion != 1';
       }
 
+      console.log(target)
+
       var opts = {
         data: {
           q: _.str.sprintf(QUERY, {

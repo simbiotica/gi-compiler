@@ -90,7 +90,7 @@ define([
         query_target = '';
 
 
-      if (question) {
+      if (question && question !== 'all') {
         if (typeof(question) === 'string') {
           result = '\'' + question + '\'';
         } else {
@@ -104,15 +104,13 @@ define([
         query_question = _.str.sprintf('aspectid in (%s)', result);
       }
 
-      if (target) {
+      if (target && target !== 'all') {
         if (query_question) {
           query_target = _.str.sprintf('and targetid in (%s)', target);
         } else {
           query_target = _.str.sprintf('targetid in (%s)', target);
         }
       }
-
-
 
       this.notesCollection.getNotes(query_question, query_target, function() {
         deferred.resolve();
@@ -130,7 +128,7 @@ define([
         query_question = '',
         query_target = '';
 
-      if (question) {
+      if (question && question !== 'all') {
         if (typeof(question) === 'string') {
           result = '\'' + question + '\'';
         } else {
@@ -144,12 +142,13 @@ define([
         query_question = _.str.sprintf('aspectid in (%s)', result);
       }
 
-      if (target) {
+      if (target && target !== 'all') {
         if (query_question) {
           query_target = _.str.sprintf('and targetid in (%s)', target);
         } else {
           query_target = _.str.sprintf('targetid in (%s)', target);
         }
+
       }
 
       this.reviewsCollection.getReviews(query_question, query_target, function(){
