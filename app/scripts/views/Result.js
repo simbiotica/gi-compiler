@@ -4,9 +4,11 @@ define([
   'handlebars',
   'collections/Products',
   'collections/Answers',
+  'collections/Reviews',
+  'collections/Notes',
   'text!templates/result.handlebars'
 ], function(_, Backbone, Handlebars, ProductsCollection,
-    AnswersCollection, tpl) {
+    AnswersCollection, ReviewCollection, NotesCollection, tpl) {
 
   'use strict';
 
@@ -19,6 +21,8 @@ define([
     initialize: function() {
       this.answersCollection = new AnswersCollection();
       this.productsCollection = new ProductsCollection();
+      this.reviewsCollection = new ReviewCollection();
+      this.notesCollection = new NotesCollection(),
       this.setListeners();
     },
 
@@ -26,7 +30,10 @@ define([
       Backbone.Events.on('Router:questions', this.empty, this);
       Backbone.Events.on('Toolbar:submit', this.showData, this);
       Backbone.Events.on('criteria:change', this.toggleCriteria, this);
+      Backbone.Events.on('sources:change', this.toggleSources, this);
+      Backbone.Events.on('comments:change', this.toggleComments, this);
       Backbone.Events.on('notes:change', this.toggleNotes, this);
+      Backbone.Events.on('reviews:change', this.toggleReviews, this);
     },
 
     render: function() {
@@ -34,15 +41,30 @@ define([
         map = false,
         self = this;
 
-      if (product_map[0].map === 'TRUE') {
+      if (product_map[0] && product_map[0].map === 'TRUE') {
         map = true;
       }
+
+      var reviews = this.reviewsCollection.toJSON();
+      var notes = this.notesCollection.toJSON();
 
       _.each(this.answersCollection.toJSON(), function(answer) {
         _.each(answer.questions, function(data){
           _.extend(data, {
             map: map,
             table: self.currentTable
+          });
+          _.each(data.answers, function(m) {
+            _.extend(m, {
+              reviews: _.where(reviews, {
+                aspectid: m.id,
+                targetid: m.targetId
+              }),
+              notes: _.where(notes, {
+                aspectid: m.id,
+                targetid: m.targetId
+              })
+            });
           });
         });
       });
@@ -52,6 +74,89 @@ define([
       }));
 
       this.toggleCriteria();
+      this.toggleSources();
+      this.toggleComments();
+      this.toggleNotes();
+      this.toggleReviews();
+    },
+
+    getNotes: function(formdata) {
+      var deferred = new $.Deferred();
+      var question = formdata.questions;
+      var target = formdata.targets;
+
+      var result = '',
+        query_question = '',
+        query_target = '';
+
+
+      if (question) {
+        if (typeof(question) === 'string') {
+          result = '\'' + question + '\'';
+        } else {
+          _.map(question, function(q) {
+            result += _.str.sprintf('\'%s\'', q) + ',';
+          });
+
+          result = result.slice(0, result.length -1);
+        }
+
+        query_question = _.str.sprintf('aspectid in (%s)', result);
+      }
+
+      if (target) {
+        if (query_question) {
+          query_target = _.str.sprintf('and targetid in (%s)', target);
+        } else {
+          query_target = _.str.sprintf('targetid in (%s)', target);
+        }
+      }
+
+
+
+      this.notesCollection.getNotes(query_question, query_target, function() {
+        deferred.resolve();
+      });
+
+      return deferred.promise();
+    },
+
+    getReviews: function(formdata) {
+      var deferred = new $.Deferred();
+      var question = formdata.questions;
+      var target = formdata.targets;
+
+      var result = '',
+        query_question = '',
+        query_target = '';
+
+      if (question) {
+        if (typeof(question) === 'string') {
+          result = '\'' + question + '\'';
+        } else {
+          _.map(question, function(q) {
+            result += _.str.sprintf('\'%s\'', q) + ',';
+          });
+
+          result = result.slice(0, result.length -1);
+        }
+
+        query_question = _.str.sprintf('aspectid in (%s)', result);
+      }
+
+      if (target) {
+        if (query_question) {
+          query_target = _.str.sprintf('and targetid in (%s)', target);
+        } else {
+          query_target = _.str.sprintf('targetid in (%s)', target);
+        }
+      }
+
+      this.reviewsCollection.getReviews(query_question, query_target, function(){
+        deferred.resolve();
+      });
+
+      return deferred.promise();
     },
 
     _isMappable: function (formdata) {
@@ -62,7 +167,7 @@ define([
         deferred.resolve();
       });
 
-      return deferred.resolve();
+      return deferred.promise();
     },
 
     empty: function() {
@@ -73,10 +178,11 @@ define([
     showData: function(formdata) {
       this.empty();
 
-
       $.when(
         this._isMappable(formdata),
-        this.getAnswers(formdata)
+        this.getAnswers(formdata),
+        this.getReviews(formdata),
+        this.getNotes(formdata)
       ).then(_.bind(function() {
         this.render();
       }, this));
@@ -107,11 +213,35 @@ define([
       }
     },
 
+    toggleSources: function() {
+      if (localStorage.getItem('GICompilerSources') === 'true') {
+        $('.sources').removeClass('is-hidden');
+      } else {
+        $('.sources').addClass('is-hidden');
+      }
+    },
+
+    toggleComments: function() {
+      if (localStorage.getItem('GICompilerComments') === 'true') {
+        $('.comments').removeClass('is-hidden');
+      } else {
+        $('.comments').addClass('is-hidden');
+      }
+    },
+
     toggleNotes: function() {
       if (localStorage.getItem('GICompilerNotes') === 'true') {
         $('.notes').removeClass('is-hidden');
       } else {
         $('.notes').addClass('is-hidden');
+      }
+    },
+
+    toggleReviews: function() {
+      if (localStorage.getItem('GICompilerReviews') === 'true') {
+        $('.reviews').removeClass('is-hidden');
+      } else {
+        $('.reviews').addClass('is-hidden');
       }
     }
 

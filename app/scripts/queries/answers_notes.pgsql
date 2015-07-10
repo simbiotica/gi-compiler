@@ -40,7 +40,6 @@ GROUP BY aspectid, criterias, aspectname
 on
 dnorm.aspectid = criterias.aspectid
 
-
 left join
 
 -- question+father SUB-select

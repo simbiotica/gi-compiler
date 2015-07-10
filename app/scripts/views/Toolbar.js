@@ -56,7 +56,10 @@ define([
 
     events: {
       'change #toggleCriteria': 'setCriteria',
+      'change #toggleSources': 'setSources',
+      'change #toggleComments': 'setComments',
       'change #toggleNotes': 'setNotes',
+      'change #toggleReviews': 'setReviews',
       'submit form': 'onSubmit'
     },
 
@@ -114,7 +117,8 @@ define([
     },
 
     render: function() {
-      var map;
+      var map,
+        tableNotes = false;
 
       if (this.location === 'map') {
         map = true;
@@ -122,8 +126,13 @@ define([
 
       this.$el.removeAttr('style');
 
+      if (this.table === '107') {
+        tableNotes = true;
+      }
+
       this.$el.html(this.template({
           table: this.table,
+          tableNotes: tableNotes,
           targets: this.targetsCollection.toJSON(),
           questions: this.questionsCollection.toJSON(),
           map: map
@@ -132,7 +141,10 @@ define([
       this.setupSelects();
 
       this.setCriteria();
+      this.setSources();
+      this.setComments();
       this.setNotes();
+      this.setReviews();
     },
 
     toggle: function() {
@@ -257,6 +269,24 @@ define([
       Backbone.Events.trigger('criteria:change');
     },
 
+    setSources: function(e) {
+      var $sources = $('#toggleSources');
+      if (e) {
+        localStorage.setItem('GICompilerSources', $sources.prop('checked'));
+      }
+      $sources.prop('checked', localStorage.getItem('GICompilerSources') === 'true');
+      Backbone.Events.trigger('sources:change');
+    },
+
+    setComments: function(e) {
+      var $comments = $('#toggleComments');
+      if (e) {
+        localStorage.setItem('GICompilerComments', $comments.prop('checked'));
+      }
+      $comments.prop('checked', localStorage.getItem('GICompilerComments') === 'true');
+      Backbone.Events.trigger('comments:change');
+    },
+
     setNotes: function(e) {
       var $notes = $('#toggleNotes');
       if (e) {
@@ -264,6 +294,15 @@ define([
       }
       $notes.prop('checked', localStorage.getItem('GICompilerNotes') === 'true');
       Backbone.Events.trigger('notes:change');
+    },
+
+    setReviews: function(e) {
+      var $reviews = $('#toggleReviews');
+      if (e) {
+        localStorage.setItem('GICompilerReviews', $reviews.prop('checked'));
+      }
+      $reviews.prop('checked', localStorage.getItem('GICompilerReviews') === 'true');
+      Backbone.Events.trigger('reviews:change');
     }
 
   });

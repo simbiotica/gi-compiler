@@ -1,16 +1,23 @@
-<h1 id="headerTitle">{{title}}</h1>
-<nav class="mod-nav is-unprintable">
-  <ul>
-    {{#if client}}
-      <li><a href="#client/{{client}}">Home</a></li>
-    {{/if}}
-      <li><a href="#questions/{{table}}" data-location="questions">List</a></li>
-      <li><a href="#map/{{table}}" data-location="map">Map</a></li>
-      {{!-- <li><a href="#rank/{{table}}/{{question}}">Rank</a></li> --}}
-      {{#if map}}
-        <li><span class="embed-icon"></span><button id="embedBtn" type="button" disabled="disabled">Share</button></li>
-      {{else}}
-        <li><button id="printBtn" type="button">Print</button></li>
+{{#if logo_url}}
+  <div class="logo-container">
+    <img src="{{logo_url}}" alt="logo">
+  </div>
+{{/if}}
+<div class="navigation">
+  <h1 id="headerTitle">{{title}}</h1>
+  <nav class="mod-nav is-unprintable">
+    <ul>
+      {{#if client}}
+        <li><a href="#client/{{client}}">Home</a></li>
       {{/if}}
-  </ul>
-</nav>
+        <li><a href="#questions/{{table}}" data-location="questions">List</a></li>
+        <li><a href="#map/{{table}}" data-location="map">Map</a></li>
+        {{!-- <li><a href="#rank/{{table}}/{{question}}">Rank</a></li> --}}
+        {{#if map}}
+          <li><span class="embed-icon"></span><button id="embedBtn" type="button" disabled="disabled">Share</button></li>
+        {{else}}
+          <li><button id="printBtn" type="button">Print</button></li>
+        {{/if}}
+    </ul>
+  </nav>
+</div>

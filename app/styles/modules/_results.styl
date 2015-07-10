@@ -1,4 +1,6 @@
 .mod-results
+  font-size 14px
+  line-height 1.6
   header
     padding 10px 0
     background-color $color-1
@@ -39,14 +41,60 @@
 
   .value-container
     display inline-block
-    padding 5px 12px
-    border-radius 20px
     background-color $color-1
+    color $color-5
+    text-align center
+    line-height 1.5
+    border-radius 20px
+    padding 5px 12px
     .value
-      color $color-5
-      line-height 1.5
-      text-align center
       text-transform uppercase
+
+  .notes-list,
+  .reviews-list
+    li
+      list-style none
+      margin 10px 0
+      h4
+        font-weight 400;
+        text-transform uppercase
+
+
+  .table-container
+    table
+      width 100%
+      font-size 14px
+      line-height 1.5
+      tbody
+        tr
+          th, td
+            padding 7px
+          th
+            padding-left 5px
+            font-weight 400
+          td
+            font-weight 300
+            textarea
+              overflow scroll
+              border none
+              resize none
+              max-height 200px
+              background: transparent
+            label
+              display block
+              padding 3px 0
+
+          &:nth-child(2n)
+            background #f5f5f5
+        &:first-child
+          th, td
+            &:first-child
+              display table-cell
+              min-width 245px
+
+
+
+
 
 .mod-results-criterias
   margin 30px 0
