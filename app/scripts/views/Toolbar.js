@@ -60,7 +60,8 @@ define([
       'change #toggleComments': 'setComments',
       'change #toggleNotes': 'setNotes',
       'change #toggleReviews': 'setReviews',
-      'submit form': 'onSubmit'
+      'submit form': 'onSubmit',
+      'click label': 'check'
     },
 
     template: Handlebars.compile(tpl),
@@ -76,6 +77,22 @@ define([
       Backbone.Events.on('Router:questions', this.setLocation, this);
       Backbone.Events.on('Router:map', this.setLocation, this);
       Backbone.Events.on('toggleToolbar', this.toggle, this);
+    },
+
+    check: function(e) {
+      if (e) {
+        var input = $(e.currentTarget).children();
+
+        if(input) {
+          if($(input).prop('checked')){
+            $(input).prop('checked', '');
+          } else {
+            $(input).prop('checked', 'checked');
+          }
+          $(input).trigger('change');
+        }
+
+      };
     },
 
     setupSelects: function() {
