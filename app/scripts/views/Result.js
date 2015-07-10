@@ -80,16 +80,28 @@ define([
       this.toggleReviews();
 
       this.formatTextAreas();
+      this.setLinks();
+    },
+
+    setLinks: function() {
+      var html = $('.mod-results')[0].innerHTML;
+      var newHTML = this.formatLinks(html);
+      $('.mod-results').html(newHTML);
     },
 
     formatTextAreas: function() {
-      _.each($('textarea'), function(txt) {
+      _.each($('textarea'), _.bind(function(txt) {
         var parent = $(txt).parent();
         var content = $(txt).html();
         var elem = document.createElement('p');
         $(elem).html(content);
         $(parent).html(elem);
-      });
+      }, this));
+    },
+
+    formatLinks: function(text) {
+      var exp = /(\b(https?:\/\/|ftp:\/\/|file:\/\/|www.)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      return text.replace(exp,"<a  target='_blank' href='$1'>$1</a>");
     },
 
     getNotes: function(formdata) {
