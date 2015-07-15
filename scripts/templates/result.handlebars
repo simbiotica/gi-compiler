@@ -59,9 +59,30 @@
                       <strong>Comments</strong>: {{comments}}
                     </p>
                   {{/if}}
+                  {{#if reviews}}
+                    <div class="reviews">
+                      {{!-- <strong>Reviews:</strong> --}}
+                      <ul class="reviews-list">
+                        {{#each reviews}}
+                          <li>
+                            {{#if reviewopinion}}
+                              <h4>{{reviewuserrole}}</h4>
+                              <p><strong>Opinion</strong>: {{reviewopinion}}</p>
+                              {{#if reviewanswervalue}}
+                                <p><strong>Suggested Answer</strong>: {{reviewanswervalue}}</p>
+                              {{/if}}
+                              {{#if reviewcomments}}
+                                <p><strong>Comments</strong>: {{reviewcomments}}</p>
+                              {{/if}}
+                            {{/if}}
+                          </li>
+                        {{/each}}
+                      </ul>
+                    </div>
+                  {{/if}}
                   {{#if notes}}
                     <div class="notes">
-                      <strong>Notes:</strong>
+                      {{!-- <strong>Notes:</strong> --}}
                       <ul class="notes-list">
                         {{#each notes}}
                           <li>
@@ -77,27 +98,6 @@
                         {{/each}}
                       </ul>
                     </div>
-                  {{/if}}
-                  {{#if reviews}}
-                  <div class="reviews">
-                    <strong>Reviews:</strong>
-                    <ul class="reviews-list">
-                      {{#each reviews}}
-                        <li>
-                          {{#if reviewopinion}}
-                            <h4>{{reviewuserrole}}</h4>
-                            <p>{{reviewopinion}}</p>
-                            {{#if reviewanswervalue}}
-                              <p>{{reviewanswervalue}}</p>
-                            {{/if}}
-                            {{#if reviewcomments}}
-                              <p>{{reviewcomments}}</p>
-                            {{/if}}
-                          {{/if}}
-                        </li>
-                      {{/each}}
-                    </ul>
-                  </div>
                   {{/if}}
                 </div>
               {{/each}}
