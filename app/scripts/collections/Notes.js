@@ -20,7 +20,7 @@ define([
           notedata1: note.notedata1.replace(/(<[\/]?[^>]+>)/ig, ' '),
           notetitle2: note.notetitle2,
           notedata2: note.notedata2.replace(/([\/]?[^>]+>)/ig, ' '),
-        }
+        };
       });
     },
 
