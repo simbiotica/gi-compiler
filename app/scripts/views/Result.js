@@ -101,7 +101,14 @@ define([
 
     formatLinks: function(text) {
       var exp = /(\b(https?:\/\/|ftp:\/\/|file:\/\/|www.)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-      return text.replace(exp,'<a  target=\'_blank\' href=\'$1\'>$1</a>');
+      return text.replace(exp, function(txt, b, regexpResult) {
+        if (regexpResult === 'www.') {
+          return '<a  target=\'_blank\' href=http://' + txt + '>' + txt + '</a>';
+        } else {
+          return '<a  target=\'_blank\' href=' + txt + '>' + txt + '</a>';
+        }
+
+      });
     },
 
     getNotes: function(formdata) {
