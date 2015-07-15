@@ -61,18 +61,18 @@
                   {{/if}}
                   {{#if reviews}}
                     <div class="reviews">
-                      <strong>Reviews:</strong>
+                      {{!-- <strong>Reviews:</strong> --}}
                       <ul class="reviews-list">
                         {{#each reviews}}
                           <li>
                             {{#if reviewopinion}}
                               <h4>{{reviewuserrole}}</h4>
-                              <p>{{reviewopinion}}</p>
+                              <p><strong>Opinion</strong>: {{reviewopinion}}</p>
                               {{#if reviewanswervalue}}
-                                <p>{{reviewanswervalue}}</p>
+                                <p><strong>Suggested Answer</strong>: {{reviewanswervalue}}</p>
                               {{/if}}
                               {{#if reviewcomments}}
-                                <p>{{reviewcomments}}</p>
+                                <p><strong>Comments</strong>: {{reviewcomments}}</p>
                               {{/if}}
                             {{/if}}
                           </li>
@@ -82,7 +82,7 @@
                   {{/if}}
                   {{#if notes}}
                     <div class="notes">
-                      <strong>Notes:</strong>
+                      {{!-- <strong>Notes:</strong> --}}
                       <ul class="notes-list">
                         {{#each notes}}
                           <li>
