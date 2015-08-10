@@ -17,6 +17,7 @@ define([
     el: '#headerView',
 
     events: {
+      'click #home': 'checkClient',
       'click #printBtn': '_print',
       'click #embedBtn' : '_getEmbedMap'
     },
@@ -26,7 +27,6 @@ define([
     initialize: function() {
       this.productsCollection = new ProductsCollection();
       this.setListeners();
-
     },
 
     setListeners: function() {
@@ -36,6 +36,19 @@ define([
       Backbone.Events.on('Router:rank', this.setTitle, this);
       Backbone.Events.on('setCurrent', this.setCurrent, this);
       //Backbone.Events.on('Product:is-mappable', this._isMappable, this);
+    },
+
+    checkClient: function(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      if (this.clientId !== Number(localStorage.getItem('client'))) {
+        localStorage.setItem('client', this.clientId);
+        e.currentTarget.href= '#client/' + this.clientId;
+      }
+
+      window.location.href = e.currentTarget.getAttribute('href');
     },
 
     _getEmbedMap: function(e) {
@@ -131,6 +144,7 @@ define([
       $.get(this.getUrl(), _.bind(function(data) {
         this.currentTitle = data.rows[0].title;
         this.logo_url = data.rows[0].logo_url;
+        this.clientId = data.rows[0].client_id;
         this.productsCollection._isMappable(this.currentParams[0], function(){
           var json = self.productsCollection.toJSON();
           self.isMappable = json[0].map;
@@ -144,7 +158,7 @@ define([
     },
 
     getQuery: function() {
-      return _.str.sprintf('SELECT projectname as title, logo_url \
+      return _.str.sprintf('SELECT projectname as title, logo_url, client_id \
         FROM export_generic_prod_%(table)s_dp, products \
         where product_id::integer = productid::integer LIMIT 1', {
         table: this.currentParams[0]
