@@ -32,7 +32,13 @@ define([
             id: r.aspectid,
             text: r.aspecttext,
             value: r.answervalue,
-            score: r.answerscore === 'null' ? null : r.answerscore,
+            score: r.answerscore === 'null' ? null : function() {
+              if (r.answerscore % 1 === 0) {
+                r.answerscore= Math.floor(r.answerscore);
+              }
+
+              return String(r.answerscore);
+            },
             table: r.datatype.toLowerCase() === 'table' ? true : null,
             target: r.targetname,
             targetId: r.targetid,
@@ -65,6 +71,8 @@ define([
           })
         };
       });
+
+      console.log(result);
       return result;
     },
 
