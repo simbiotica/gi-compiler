@@ -40,6 +40,9 @@ define([
           reviewopinion: result
         });
       });
+
+      data.rows = _.sortBy(data.rows, 'reviewuserrole');
+
       return data.rows;
     },
 
