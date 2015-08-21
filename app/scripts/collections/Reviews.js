@@ -49,9 +49,9 @@ define([
     getReviews: function(question, target, callback) {
       var opinion;
       if (question || target) {
-        opinion = 'and reviewopinion != 1';
+        opinion = 'and reviewopinion != -1';
       } else {
-        opinion = 'reviewopinion != 1';
+        opinion = 'reviewopinion != -1';
       }
 
       var opts = {
